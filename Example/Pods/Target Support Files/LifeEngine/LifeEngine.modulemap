@@ -1,6 +1,0 @@
-framework module LifeEngine {
-  umbrella header "LifeEngine-umbrella.h"
-
-  export *
-  module * { export * }
-}
