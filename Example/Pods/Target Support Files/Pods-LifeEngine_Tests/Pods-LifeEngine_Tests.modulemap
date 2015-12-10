@@ -1,0 +1,6 @@
+framework module Pods_LifeEngine_Tests {
+  umbrella header "Pods-LifeEngine_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
