@@ -1,0 +1,6 @@
+language: objective-c
+before_install: cd Example
+osx_image: xcode7.2
+xcode_workspace: LifeEngine.xcworkspace
+xcode_scheme: LifeEngine-Example
+script: xctool -workspace LifeEngine.xcworkspace -scheme LifeEngine-Example -sdk iphonesimulator build test

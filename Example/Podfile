@@ -1,5 +1,4 @@
 source 'https://github.com/CocoaPods/Specs.git'
-use_frameworks!
 
 target 'LifeEngine_Example', :exclusive => true do
   pod "LifeEngine", :path => "../"
