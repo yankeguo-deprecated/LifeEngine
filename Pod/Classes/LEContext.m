@@ -65,7 +65,7 @@
   [self reload];
 }
 
-- (void)removeValueForKey:(NSString *__nonnull)key atRev:(NSUInteger)rev {
+- (void)removeObjectForKey:(NSString *__nonnull)key atRev:(NSUInteger)rev {
   [self setObject:nil forKey:key atRev:rev];
 }
 

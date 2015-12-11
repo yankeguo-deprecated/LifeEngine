@@ -72,7 +72,7 @@ describe(@"removeForKeyAtRev", ^{
     LEContext* context = [[LEContext alloc] init];
     [context setObject:@(1) forKey:@"key" atRev:1];
     XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
-    [context removeValueForKey:@"key" atRev:2];
+    [context removeObjectForKey:@"key" atRev:2];
     XCTAssertTrue([context stringForKey:@"key"] == nil);
   });
 });
