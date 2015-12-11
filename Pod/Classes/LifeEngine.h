@@ -11,6 +11,8 @@
 
 #import <LifeEngine/LEItem.h>
 #import <LifeEngine/LEDisplayItem.h>
+#import <LifeEngine/LETextItem.h>
+#import <LifeEngine/LEImageItem.h>
 #import <LifeEngine/LEWaitItem.h>
 #import <LifeEngine/LEActionItem.h>
 

@@ -5,8 +5,6 @@ target 'LifeEngine_Example', :exclusive => true do
 end
 
 target 'LifeEngine_Tests', :exclusive => true do
-  pod "LifeEngine", :path => "../"
-
   pod 'Specta'
   pod 'Expecta'
 end

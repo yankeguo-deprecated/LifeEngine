@@ -7,6 +7,8 @@
 
 #import "LEItem.h"
 
-@interface LEWaitItem : LEItem
+@interface LEWaitItem: LEItem
+
+@property(nonatomic, assign) NSTimeInterval time;
 
 @end
