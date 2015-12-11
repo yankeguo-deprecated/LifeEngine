@@ -29,4 +29,6 @@
 
 - (void)applyChangsets:(NSArray<LEContextChangeset *> *__nonnull)changesets;
 
+- (void)rollbackToRev:(NSUInteger)rev;
+
 @end

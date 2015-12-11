@@ -33,4 +33,64 @@ describe(@"stringForKey", ^{
   
 });
 
+describe(@"numberForKey", ^{
+  it(@"should work with NSString", ^{
+    LEContext* context = [[LEContext alloc] init];
+    [context setObject:@"1" forKey:@"key" atRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+  });
+  
+  it(@"should work with NSNumber", ^{
+    LEContext* context = [[LEContext alloc] init];
+    [context setObject:@(1) forKey:@"key" atRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+  });
+  
+  it(@"should work with nil", ^{
+    LEContext* context = [[LEContext alloc] init];
+    [context setObject:@(1) forKey:@"key" atRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+    [context setObject:nil forKey:@"key" atRev:2];
+    XCTAssertTrue([context stringForKey:@"key"] == nil);
+  });
+});
+
+describe(@"setObjectForKeyAtRev", ^{
+  it(@"should work with multiple times", ^{
+    LEContext* context = [[LEContext alloc] init];
+    [context setObject:@(1) forKey:@"key" atRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+    [context setObject:@(2) forKey:@"key" atRev:2];
+    XCTAssertEqual(2, [context numberForKey:@"key"].integerValue);
+    [context setObject:@"C" forKey:@"key" atRev:3];
+    XCTAssertEqualObjects(@"C", [context stringForKey:@"key"]);
+  });
+});
+
+describe(@"removeForKeyAtRev", ^{
+  it(@"should work", ^{
+    LEContext* context = [[LEContext alloc] init];
+    [context setObject:@(1) forKey:@"key" atRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+    [context removeValueForKey:@"key" atRev:2];
+    XCTAssertTrue([context stringForKey:@"key"] == nil);
+  });
+});
+
+describe(@"rollbackToRev", ^{
+  it(@"should work", ^{
+    LEContext* context = [[LEContext alloc] init];
+    [context setObject:@(1) forKey:@"key" atRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+    [context setObject:@(2) forKey:@"key" atRev:2];
+    XCTAssertEqual(2, [context numberForKey:@"key"].integerValue);
+    [context setObject:@"C" forKey:@"key" atRev:3];
+    XCTAssertEqualObjects(@"C", [context stringForKey:@"key"]);
+    [context rollbackToRev:2];
+    XCTAssertEqual(2, [context numberForKey:@"key"].integerValue);
+    [context rollbackToRev:1];
+    XCTAssertEqual(1, [context numberForKey:@"key"].integerValue);
+  });
+});
+
 SpecEnd

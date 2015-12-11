@@ -99,4 +99,14 @@
   [self reload];
 }
 
+- (void)rollbackToRev:(NSUInteger)rev {
+  NSUInteger revToRevmoe = [self.changesetRevs indexGreaterThanIndex:rev];
+  while (revToRevmoe != NSNotFound) {
+    [self.changesetRevs removeIndex:revToRevmoe];
+    [self.changesets removeObjectForKey:@(revToRevmoe)];
+    revToRevmoe = [self.changesetRevs indexGreaterThanIndex:rev];
+  }
+  [self reload];
+}
+
 @end
