@@ -4,5 +4,6 @@
 
 #import <Specta/Specta.h>
 #import <Expecta/Expecta.h>
+#import <LifeEngine/LifeEngine.h>
 
 #endif
