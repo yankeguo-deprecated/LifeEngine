@@ -8,6 +8,8 @@
 
 #import <LifeEngine/LifeEngine.h>
 
-@interface LEImageItem : LEDisplayItem
+@interface LEImageItem: LEDisplayItem
+
+@property(nonatomic, readonly) NSString *imageName;
 
 @end

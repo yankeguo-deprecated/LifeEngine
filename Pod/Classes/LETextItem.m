@@ -8,7 +8,7 @@
 #import "LETextItem.h"
 
 @interface LETextItem () {
-  NSString *__nonnull _style;
+  NSString *__nullable _style;
   NSString *__nonnull _text;
 }
 
@@ -21,6 +21,7 @@
 
   _text = dictionary[@"text"];
   _style = dictionary[@"style"];
+  NSParameterAssert(_text);
 }
 
 #pragma mark - Getters / Setters

@@ -7,10 +7,10 @@
 
 #import <LifeEngine/LifeEngine.h>
 
-@interface LETextItem : LEDisplayItem
+@interface LETextItem: LEDisplayItem
 
-@property (nonatomic, readonly) NSString* text;
+@property(nonatomic, readonly) NSString *__nonnull text;
 
-@property (nonatomic, readonly) NSString* style;
+@property(nonatomic, readonly) NSString *__nullable style;
 
 @end

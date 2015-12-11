@@ -1,0 +1,27 @@
+{
+  "text": {
+    "__class": "LETextItem",
+    "text": "Sample",
+    "style": "green"
+  },
+  "image": {
+    "__class": "LEImageItem",
+    "image_name": "sample_image"
+  },
+  "wait_number": {
+    "__class": "LEWaitItem",
+    "time": 200
+  },
+  "wait_string": {
+    "__class": "LEWaitItem",
+    "time": "1.5h"
+  },
+  "wait_string2": {
+    "__class": "LEWaitItem",
+    "time": "2m"
+  },
+  "wait_string3": {
+    "__class": "LEWaitItem",
+    "time": "1.5d"
+  }
+}

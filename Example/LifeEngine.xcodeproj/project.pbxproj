@@ -23,6 +23,8 @@
 		691E221D1C1B2CF1000DCA3D /* default.locale.plist in Resources */ = {isa = PBXBuildFile; fileRef = 691E221F1C1B2CF1000DCA3D /* default.locale.plist */; };
 		691E22231C1B2D03000DCA3D /* addresses.locale.plist in Resources */ = {isa = PBXBuildFile; fileRef = 691E22251C1B2D03000DCA3D /* addresses.locale.plist */; };
 		691E222A1C1B2E0A000DCA3D /* LEI18nSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */; };
+		69CA54611C1B677900600072 /* items_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 69CA54601C1B677900600072 /* items_sample.json */; };
+		69CA54651C1B67B600600072 /* LECommonItemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CA54631C1B67A100600072 /* LECommonItemsSpec.m */; };
 		6D6DE854198F4AFA98C29680 /* LEContextSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DEE0BE52DAA5963D67B06 /* LEContextSpec.m */; };
 		79D5188B7299B3A5A05A95A6 /* libPods-LifeEngine_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4FA2D5BBA81821D5A9874F /* libPods-LifeEngine_Tests.a */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
@@ -72,6 +74,8 @@
 		691E22241C1B2D03000DCA3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/addresses.locale.plist; sourceTree = "<group>"; };
 		691E22261C1B2D06000DCA3D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/addresses.locale.plist"; sourceTree = "<group>"; };
 		691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEI18nSpec.m; sourceTree = "<group>"; };
+		69CA54601C1B677900600072 /* items_sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items_sample.json; sourceTree = "<group>"; };
+		69CA54631C1B67A100600072 /* LECommonItemsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LECommonItemsSpec.m; sourceTree = "<group>"; };
 		6D6DEE0BE52DAA5963D67B06 /* LEContextSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEContextSpec.m; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		CD4FA2D5BBA81821D5A9874F /* libPods-LifeEngine_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LifeEngine_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +155,7 @@
 		6003F593195388D20070C39A /* Example for LifeEngine */ = {
 			isa = PBXGroup;
 			children = (
+				69CA54601C1B677900600072 /* items_sample.json */,
 				691E221A1C1B2CD4000DCA3D /* I18n */,
 				6003F59C195388D20070C39A /* LEAppDelegate.h */,
 				6003F59D195388D20070C39A /* LEAppDelegate.m */,
@@ -181,6 +186,7 @@
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				6D6DEE0BE52DAA5963D67B06 /* LEContextSpec.m */,
 				691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */,
+				69CA54631C1B67A100600072 /* LECommonItemsSpec.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				691E221D1C1B2CF1000DCA3D /* default.locale.plist in Resources */,
+				69CA54611C1B677900600072 /* items_sample.json in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				691E22231C1B2D03000DCA3D /* addresses.locale.plist in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -426,6 +433,7 @@
 			files = (
 				6D6DE854198F4AFA98C29680 /* LEContextSpec.m in Sources */,
 				691E222A1C1B2E0A000DCA3D /* LEI18nSpec.m in Sources */,
+				69CA54651C1B67B600600072 /* LECommonItemsSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
