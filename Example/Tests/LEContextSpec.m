@@ -4,9 +4,6 @@
 //  Created by Ryan Guo on 15/12/11.
 //
 
-#import <Specta/Specta.h>
-#import <LifeEngine/LifeEngine.h>
-
 SpecBegin(LEContext)
 
 describe(@"stringForKey", ^{
