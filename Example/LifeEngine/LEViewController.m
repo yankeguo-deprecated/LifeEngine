@@ -8,6 +8,8 @@
 
 #import "LEViewController.h"
 
+#import <LifeEngine/LifeEngine.h>
+
 @interface LEViewController ()
 
 @end
