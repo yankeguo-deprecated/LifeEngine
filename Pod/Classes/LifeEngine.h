@@ -9,6 +9,8 @@
 
 #import <LifeEngine/LEContext.h>
 
+#import <LifeEngine/LETextRenderer.h>
+
 #import <LifeEngine/LEItem.h>
 #import <LifeEngine/LEDisplayItem.h>
 #import <LifeEngine/LETextItem.h>
