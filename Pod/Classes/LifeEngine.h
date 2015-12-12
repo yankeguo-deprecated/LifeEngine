@@ -20,4 +20,5 @@
 
 #import <LifeEngine/LEScene.h>
 
+#import <LifeEngine/LESceneLoader.h>
 #import <LifeEngine/LEGame.h>

@@ -12,14 +12,8 @@
 
 @interface LEScene: NSObject
 
-@property(nonatomic, readonly) LEGame *__nonnull game;
+@property(nonatomic, copy) NSString *__nonnull identifier;
 
-@property(nonatomic, readonly) NSString *__nonnull identifier;
-
-@property(nonatomic, readonly) NSArray<__kindof LEItem *> *__nonnull items;
-
-- (instancetype __nonnull)initWithGame:(LEGame *__nonnull)game
-                            identifier:(NSString *__nonnull)identifier
-                              rawItems:(NSArray<NSDictionary *> *__nonnull)rawItems;
+@property(nonatomic, strong) NSArray<__kindof LEItem *> *__nonnull items;
 
 @end
