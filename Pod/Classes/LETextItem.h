@@ -13,4 +13,6 @@
 
 @property(nonatomic, readonly) NSString *__nullable style;
 
+@property(nonatomic, copy) NSString *__nullable renderedText;
+
 @end

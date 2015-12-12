@@ -8,9 +8,7 @@
 
 #import "LEImageItem.h"
 
-@interface LEImageItem () {
-  NSString *__nonnull _imageName;
-}
+@interface LEImageItem ()
 
 @end
 
@@ -19,8 +17,14 @@
 - (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary {
   [super awakeFromDictionary:dictionary];
 
-  _imageName = [dictionary[@"image_name"] copy];
+  _imageName = dictionary[@"image_name"];
   NSParameterAssert(_imageName);
+}
+
+- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary {
+  [super dumpToDictionary:dictionary];
+
+  dictionary[@"image_name"] = self.imageName;
 }
 
 @end
