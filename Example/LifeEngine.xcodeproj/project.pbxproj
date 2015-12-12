@@ -20,6 +20,7 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
+		691740A91C1C98CA00A63F2A /* LETextRendererSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 691740A81C1C98CA00A63F2A /* LETextRendererSpec.m */; };
 		691E221D1C1B2CF1000DCA3D /* default.locale.plist in Resources */ = {isa = PBXBuildFile; fileRef = 691E221F1C1B2CF1000DCA3D /* default.locale.plist */; };
 		691E22231C1B2D03000DCA3D /* addresses.locale.plist in Resources */ = {isa = PBXBuildFile; fileRef = 691E22251C1B2D03000DCA3D /* addresses.locale.plist */; };
 		691E222A1C1B2E0A000DCA3D /* LEI18nSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */; };
@@ -65,6 +66,7 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		691740A81C1C98CA00A63F2A /* LETextRendererSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LETextRendererSpec.m; sourceTree = "<group>"; };
 		691E22141C1B2BF3000DCA3D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		691E22161C1B2BF3000DCA3D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		691E22171C1B2BFF000DCA3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				6D6DEE0BE52DAA5963D67B06 /* LEContextSpec.m */,
 				691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */,
 				69CA54631C1B67A100600072 /* LECommonItemsSpec.m */,
+				691740A81C1C98CA00A63F2A /* LETextRendererSpec.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				6D6DE854198F4AFA98C29680 /* LEContextSpec.m in Sources */,
 				691E222A1C1B2E0A000DCA3D /* LEI18nSpec.m in Sources */,
 				69CA54651C1B67B600600072 /* LECommonItemsSpec.m in Sources */,
+				691740A91C1C98CA00A63F2A /* LETextRendererSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

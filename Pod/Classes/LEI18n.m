@@ -31,13 +31,16 @@ NSString *const LEI18nDefaultGroupName = @"default";
   return self;
 }
 
-- (NSString *__nullable)localizedStringForKey:(NSString *__nonnull)key {
+- (NSString *__nonnull)localizedStringForKey:(NSString *__nonnull)key {
   NSString *result = [self.directCache objectForKey:key];
   if (result == nil) {
     result = [self _L2_localizedStringForKey:key];
     if (result) {
       [self.directCache setObject:result forKey:key];
     }
+  }
+  if (result == nil) {
+    result = key;
   }
   return result;
 }
