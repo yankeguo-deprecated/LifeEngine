@@ -9,7 +9,43 @@
 
 #import "LEContextChangeset.h"
 
+@class LEContext;
+
+@protocol LEContextPersistenceDelegate
+
+/**
+ *  Return all changesets persisted
+ *
+ *  @param context LEContext
+ *
+ *  @return all changesets
+ */
+- (NSArray<LEContextChangeset *> *__nonnull)allChangesetsForContext:(LEContext *__nonnull)context;
+
+/**
+ *  Invoked when a changeset is added or updated
+ *
+ *  @param context   LEContext
+ *  @param changeset changeset added or updated
+ */
+- (void)context:(LEContext *__nonnull)context didAddChangeset:(LEContextChangeset *__nonnull)changeset;
+
+/**
+ *  Invoked when a changeset with rev is removed
+ *
+ *  @param context LEContext
+ *  @param rev     rev of changeset removed
+ */
+- (void)context:(LEContext *__nonnull)context didRemoveChangesetWithRev:(NSUInteger)rev;
+
+@end
+
 @interface LEContext: NSObject
+
+/**
+ *  Persistence Delegate
+ */
+@property(nonatomic, weak) id<LEContextPersistenceDelegate> persistenceDelegate;
 
 #pragma mark - Operations
 
@@ -32,7 +68,7 @@
 - (NSNumber *__nullable)numberForKey:(NSString *__nonnull)key;
 
 /**
- *  Set a NSObject for key, only NSString, NSNumber, NSNull, nil supported
+ *  Set a NSObject for key, only NSString, NSNumber, NSNull, nil supported, will invoke persistanceDelegate
  *
  *  @param object object
  *  @param key    key for object
@@ -41,7 +77,7 @@
 - (void)setObject:(NSObject<NSCopying, NSCoding> *__nullable)object forKey:(NSString *__nonnull)key atRev:(NSUInteger)rev;
 
 /**
- *  Remote a value for key
+ *  Remote a value for key, will invoke persistanceDelegate
  *
  *  @param key key for object
  *  @param rev revision number for tracking
@@ -51,24 +87,24 @@
 #pragma mark - Changesets
 
 /**
- *  Reload context and rebuild key-value pairs from changesets
+ *  Load all changsets from persistenceDelegate
  */
-- (void)reload;
+- (void)load;
 
 /**
- *  Clear all changesets and key-value pairs
+ *  Clear all changesets and key-value pairs, will invoke persistanceDelegate
  */
 - (void)clear;
 
 /**
- *  Apply a array of changesets
+ *  Remove a changeset with sepcified rev, will invoke persistanceDelegate
  *
- *  @param changesets changesets to apply
+ *  @param rev rev to remove
  */
-- (void)applyChangsets:(NSArray<LEContextChangeset *> *__nonnull)changesets;
+- (void)removeChangesetAtRev:(NSUInteger)rev;
 
 /**
- *  Rollback context to current revision
+ *  Rollback context to current revision, will invoke persistanceDelegate
  *
  *  @param rev revision number
  */
