@@ -9,11 +9,7 @@
 
 #import "LEGame.h"
 
-@interface LEScene () {
-  LEGame *_game;
-  NSString *_identifier;
-  NSArray<__kindof LEItem *> *_items;
-}
+@interface LEScene ()
 
 @end
 
@@ -33,20 +29,6 @@
     _items = array;
   }
   return self;
-}
-
-#pragma mark - Getters / Setters
-
-- (LEGame *)game {
-  return _game;
-}
-
-- (NSString *)identifier {
-  return _identifier;
-}
-
-- (NSArray *)items {
-  return _items;
 }
 
 @end

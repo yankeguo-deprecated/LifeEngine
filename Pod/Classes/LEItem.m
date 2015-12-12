@@ -7,6 +7,8 @@
 
 #import "LEItem.h"
 
+NSString *const __nonnull LEItemClassKey = @"__class";
+
 @interface LEItem () {
   NSString *_sceneIdentifier;
   NSUInteger _index;
@@ -17,7 +19,7 @@
 @implementation LEItem
 
 + (__kindof LEItem *__nonnull)itemWithDictionary:(NSDictionary *__nonnull)dictionary sceneIdentifier:(NSString *__nonnull)sceneIdentifier index:(NSUInteger)index {
-  NSString *clsName = (NSString *) dictionary[@"__class"];
+  NSString *clsName = (NSString *) dictionary[LEItemClassKey];
   if (clsName == nil) {
     clsName = @"LETextItem";
   }
@@ -25,6 +27,7 @@
   LEItem *item = [((LEItem *) [NSClassFromString(clsName) alloc]) initWithDictionary:dictionary
                                                                      sceneIdentifier:sceneIdentifier
                                                                                index:index];
+  NSParameterAssert([item isKindOfClass:[LEItem class]]);
   return item;
 }
 
@@ -35,6 +38,13 @@
     [self awakeFromDictionary:dictionary];
   }
   return self;
+}
+
+- (NSDictionary *__nonnull)toDictionary {
+  NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
+  mutableDictionary[LEItemClassKey] = NSStringFromClass([self class]);
+  [self dumpToDictionary:mutableDictionary];
+  return [mutableDictionary copy];
 }
 
 #pragma mark - Getters / Setters
@@ -50,6 +60,17 @@
 #pragma mark - For Subclass
 
 - (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary {
+}
+
+- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary {
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  return [LEItem itemWithDictionary:[self toDictionary]
+                    sceneIdentifier:self.sceneIdentifier
+                              index:self.index];
 }
 
 @end

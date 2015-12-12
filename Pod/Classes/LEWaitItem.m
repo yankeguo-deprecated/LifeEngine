@@ -7,9 +7,7 @@
 
 #import "LEWaitItem.h"
 
-@interface LEWaitItem () {
-  NSTimeInterval _time;
-}
+@interface LEWaitItem ()
 
 @end
 
@@ -17,6 +15,14 @@
 
 - (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary {
   [super awakeFromDictionary:dictionary];
+
+  //  Extract Text
+  _text = dictionary[@"text"];
+  _style = dictionary[@"style"];
+  _renderedText = dictionary[@"rendered_text"];
+  NSParameterAssert(_text);
+
+  //  Extract Time
 
   NSString *number = dictionary[@"time"];
 
@@ -35,8 +41,13 @@
   NSParameterAssert(_time > 0);
 }
 
-- (NSTimeInterval)time {
-  return _time;
+- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary {
+  [super dumpToDictionary:dictionary];
+
+  dictionary[@"text"] = self.text;
+  dictionary[@"style"] = self.style;
+  dictionary[@"rendered_text"] = self.renderedText;
+  dictionary[@"time"] = @(self.time);
 }
 
 @end

@@ -7,10 +7,7 @@
 
 #import "LETextItem.h"
 
-@interface LETextItem () {
-  NSString *__nullable _style;
-  NSString *__nonnull _text;
-}
+@interface LETextItem ()
 
 @end
 
@@ -21,17 +18,16 @@
 
   _text = dictionary[@"text"];
   _style = dictionary[@"style"];
+  _renderedText = dictionary[@"rendered_text"];
   NSParameterAssert(_text);
 }
 
-#pragma mark - Getters / Setters
+- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary {
+  [super dumpToDictionary:dictionary];
 
-- (NSString *)text {
-  return _text;
-}
-
-- (NSString *)style {
-  return _style;
+  dictionary[@"text"] = self.text;
+  dictionary[@"style"] = self.style;
+  dictionary[@"rendered_text"] = self.renderedText;
 }
 
 @end

@@ -7,7 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LEItem: NSObject
+extern NSString *const __nonnull LEItemClassKey;
+
+@interface LEItem: NSObject<NSCopying>
 
 @property(nonatomic, readonly) NSString *__nonnull sceneIdentifier;
 
@@ -17,8 +19,12 @@
 
 - (instancetype __nonnull)initWithDictionary:(NSDictionary *__nonnull)dictionary sceneIdentifier:(NSString *__nonnull)sceneIdentifier index:(NSUInteger)index;
 
+- (NSDictionary *__nonnull)toDictionary;
+
 #pragma mark - For Subclass
 
 - (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary;
+
+- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary;
 
 @end
