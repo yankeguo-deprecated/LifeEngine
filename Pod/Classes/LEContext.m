@@ -57,12 +57,13 @@
 }
 
 - (void)setObject:(NSObject<NSCopying, NSCoding> *__nullable)object forKey:(NSString *__nonnull)key atRev:(NSUInteger)rev {
-  NSParameterAssert(![self.changesetRevs containsIndex:rev]);
   if (object == nil) object = [NSNull null];
   LEContextChangeset *changeset = [LEContextChangeset changesetWithRev:rev value:object key:key];
   [self.changesetRevs addIndex:changeset.rev];
   self.changesets[@(changeset.rev)] = changeset;
-  [self reload];
+  //  Persistence
+  [self.persistenceDelegate context:self didAddChangeset:changeset];
+  [self rebuild];
 }
 
 - (void)removeObjectForKey:(NSString *__nonnull)key atRev:(NSUInteger)rev {
@@ -71,42 +72,51 @@
 
 #pragma mark - Changesets
 
-- (void)reload {
+- (void)rebuild {
   [self.context removeAllObjects];
 
   [self.changesetRevs enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
     LEContextChangeset *changeset = self.changesets[@(idx)];
-    if (changeset.value == nil || [changeset isKindOfClass:[NSNull class]]) {
-      [self.context removeObjectForKey:changeset.key];
-    } else {
-      self.context[changeset.key] = [changeset.value copy];
-    }
+    self.context[changeset.key] = changeset.value;
   }];
 }
 
+- (void)load {
+  NSArray *changesets = [self.persistenceDelegate allChangesetsForContext:self];
+  [changesets enumerateObjectsUsingBlock:^(LEContextChangeset *changeset, NSUInteger idx, BOOL *stop) {
+    [self.changesetRevs addIndex:changeset.rev];
+    self.changesets[@(changeset.rev)] = changeset;
+  }];
+  [self rebuild];
+}
+
 - (void)clear {
+  //  Persistence
+  [self.changesetRevs enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+    [self.persistenceDelegate context:self didRemoveChangesetWithRev:idx];
+  }];
   [self.context removeAllObjects];
   [self.changesets removeAllObjects];
   [self.changesetRevs removeAllIndexes];
 }
 
-- (void)applyChangsets:(NSArray<LEContextChangeset *> *__nonnull)changesets {
-  [changesets enumerateObjectsUsingBlock:^(LEContextChangeset *obj, NSUInteger idx, BOOL *stop) {
-    NSParameterAssert(![self.changesetRevs containsIndex:obj.rev]);
-    [self.changesetRevs addIndex:obj.rev];
-    self.changesets[@(obj.rev)] = obj;
-  }];
-  [self reload];
+- (void)removeChangesetAtRev:(NSUInteger)rev {
+  [self.changesetRevs removeIndex:rev];
+  [self.changesets removeObjectForKey:@(rev)];
+  //  Persistence
+  [self.persistenceDelegate context:self didRemoveChangesetWithRev:rev];
+  [self rebuild];
 }
 
 - (void)rollbackToRev:(NSUInteger)rev {
-  NSUInteger revToRevmoe = [self.changesetRevs indexGreaterThanIndex:rev];
-  while (revToRevmoe != NSNotFound) {
+  NSUInteger revToRevmoe = NSNotFound;;
+  while ((revToRevmoe = [self.changesetRevs indexGreaterThanIndex:rev]) != NSNotFound) {
     [self.changesetRevs removeIndex:revToRevmoe];
     [self.changesets removeObjectForKey:@(revToRevmoe)];
-    revToRevmoe = [self.changesetRevs indexGreaterThanIndex:rev];
+    //  Persistence
+    [self.persistenceDelegate context:self didRemoveChangesetWithRev:revToRevmoe];
   }
-  [self reload];
+  [self rebuild];
 }
 
 @end
