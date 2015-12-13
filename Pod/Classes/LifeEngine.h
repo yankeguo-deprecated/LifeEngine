@@ -9,7 +9,7 @@
 
 #import <LifeEngine/LEContext.h>
 
-#import <LifeEngine/LETextRenderer.h>
+#import <LifeEngine/LEEvaluator.h>
 
 #import <LifeEngine/LEItem.h>
 #import <LifeEngine/LEDisplayItem.h>
