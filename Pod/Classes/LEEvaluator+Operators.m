@@ -137,9 +137,11 @@
         to = @"";
       }
       NSRegularExpression *toRegExp = [[NSRegularExpression alloc] initWithPattern:to options:0 error:nil];
-      NSLog(@"%@ is not a valid regexp", to);
       NSUInteger numberOfMatches = [toRegExp numberOfMatchesInString:from options:0 range:NSMakeRange(0, from.length)];
-      if (toRegExp == nil) return NO;
+      if (toRegExp == nil) {
+        NSLog(@"%@ is not a valid regexp", to);
+        return NO;
+      }
       if ([operator isEqualToString:@"StringMatches"]) {
         return numberOfMatches > 0;
       } else if ([operator isEqualToString:@"StringNotMatches"]) {
