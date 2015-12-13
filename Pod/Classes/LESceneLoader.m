@@ -33,6 +33,7 @@
                                                                              withExtension:@"scene.json"]];
     dictionary = [NSJSONSerialization JSONObjectWithData:rawScene options:0 error:nil];
     NSParameterAssert([dictionary isKindOfClass:[NSDictionary class]]);
+    NSParameterAssert([((NSString *) dictionary[@"identifier"]) isEqualToString:identifier]);
     rawItems = dictionary[@"items"];
     [self.cache setObject:dictionary forKey:identifier cost:rawItems.count];
   } else {
