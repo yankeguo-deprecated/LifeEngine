@@ -30,7 +30,9 @@
 
 - (NSNumber *__nullable)numberFromObject:(NSObject *__nullable)object {
   if ([object isKindOfClass:[NSString class]]) {
-    return @([((NSString *) object) doubleValue]);
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    return [formatter numberFromString:(NSString *) object];
   }
   if ([object isKindOfClass:[NSNumber class]]) {
     return (NSNumber *) object;

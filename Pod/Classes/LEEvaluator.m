@@ -4,6 +4,8 @@
 
 #import "LEEvaluator.h"
 
+#import "LEEvaluator+Operators.h"
+
 @interface LEEvaluator ()
 
 @property(nonatomic, strong) NSRegularExpression *__nonnull expressionI18n;
@@ -48,6 +50,38 @@
                                    resolveLocalizedStringForKey:key]];
   }
   return [result copy];
+}
+
+- (NSNumber *__nonnull)evaluateStringAsNumber:(NSString *__nonnull)string {
+  NSString *stringResult = [self evaluateString:string];
+  if (stringResult.length == nil) {
+    return @(0);
+  }
+  NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+  formatter.numberStyle = NSNumberFormatterDecimalStyle;
+  NSNumber *result = [formatter numberFromString:stringResult];
+  if (result == nil) {
+    return @(0);
+  }
+  return result;
+}
+
+- (BOOL)evaluateConditionDictionary:(NSDictionary *__nonnull)dictionary {
+  NSParameterAssert([dictionary isKindOfClass:[NSDictionary class]]);
+  //  Try 'And'
+  NSArray *andSequence = dictionary[@"And"];
+  if (andSequence) {
+    NSParameterAssert(dictionary.count == 1);
+    return [self evaluateAndOperator:andSequence];
+  }
+  //  Try 'Or'
+  NSArray *orSequence = dictionary[@"Or"];
+  if (orSequence) {
+    NSParameterAssert(dictionary.count == 1);
+    return [self evaluateOrOperator:orSequence];
+  }
+  //  Using Common Operators
+  return [self evaluateConditionWithCommonOperatorsOnly:dictionary];
 }
 
 @end

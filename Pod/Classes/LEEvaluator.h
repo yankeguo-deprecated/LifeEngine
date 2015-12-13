@@ -46,5 +46,17 @@
  *  @return evaluation result
  */
 - (NSString *__nonnull)evaluateString:(NSString *__nonnull)string;
+- (NSNumber *__nonnull)evaluateStringAsNumber:(NSString *__nonnull)string;
+
+/**
+ *  Evaluate a condition dictionary
+ *
+ *  @see https://github.com/IslandZero/LifeEngine/wiki/Condition-Dictionary-Evaluation
+ *
+ *  @param dictionary condition dictionary
+ *
+ *  @return evaluation result
+ */
+- (BOOL)evaluateConditionDictionary:(NSDictionary *__nonnull)dictionary;
 
 @end
