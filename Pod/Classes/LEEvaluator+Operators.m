@@ -99,7 +99,7 @@
   NSParameterAssert(fromComponents.count == 2);
   NSString *resourceType = fromComponents.firstObject;
   NSString *resourceKey = fromComponents.lastObject;
-  if ([operator hasSuffix:@"Number"]) {
+  if ([operator hasPrefix:@"Number"]) {
     //  Extract from / to
     NSNumber *from = [self resolveObjectAsNumberForKey:resourceKey resourceType:resourceType];
     NSNumber *to = nil;
@@ -124,7 +124,7 @@
     } else if ([operator isEqualToString:@"NumberLessThanEquals"]) {
       return result == NSOrderedAscending || result == NSOrderedSame;
     }
-  } else if ([operator hasSuffix:@"String"]) {
+  } else if ([operator hasPrefix:@"String"]) {
     NSString *from = [self resolveObjectAsStringForKey:resourceKey resourceType:resourceType];
     if ([operator rangeOfString:@"Matches"].location != NSNotFound) {
       //  Extract to without evaluation
@@ -186,8 +186,8 @@
     NSNumber *to = (NSNumber *) rawTo;
     NSParameterAssert([to isKindOfClass:[NSNumber class]]);
     //  NSObject == nil VS true/false
-    return (to.boolValue && from != nil) ||
-        ((!to.boolValue) && from == nil);
+    return (to.boolValue && from == nil) ||
+        ((!to.boolValue) && from != nil);
   }
   NSAssert(NO, @"operator not supported: %@", operator);
   return NO;
