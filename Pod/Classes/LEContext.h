@@ -50,6 +50,15 @@
 #pragma mark - Operations
 
 /**
+ *  Get a NSObject from context
+ *
+ *  @param key key for value
+ *
+ *  @return NSString, NSNumber or nil
+ */
+- (__kindof NSObject *__nullable)objectForKey:(NSString *__nonnull)key;
+
+/**
  *  Get a NSString value from context
  *
  *  @param key key for NSString value

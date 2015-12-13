@@ -30,7 +30,9 @@
 
 - (NSNumber *__nullable)numberFromObject:(NSObject *__nullable)object {
   if ([object isKindOfClass:[NSString class]]) {
-    return @([((NSString *) object) doubleValue]);
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    return [formatter numberFromString:(NSString *) object];
   }
   if ([object isKindOfClass:[NSNumber class]]) {
     return (NSNumber *) object;
@@ -50,6 +52,14 @@
 
 - (NSNumber *__nullable)numberForKey:(NSString *__nonnull)key {
   return [self numberFromObject:self.context[key]];
+}
+
+- (__kindof NSObject *__nullable)objectForKey:(NSString *__nonnull)key {
+  NSObject *value = self.context[key];
+  if ([value isKindOfClass:[NSNull class]] || value == nil) {
+    return nil;
+  }
+  return value;
 }
 
 - (NSString *__nullable)stringForKey:(NSString *__nonnull)key {
