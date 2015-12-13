@@ -47,12 +47,12 @@
 
 #pragma mark - TextRendererDataSource
 
-- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
-             resolveStringForKey:(NSString *__nonnull)key
-                    resourceType:(NSString *__nonnull)type {
+- (__kindof NSObject *__nullable)evaluator:(LEEvaluator *__nonnull)evaluator
+                       resolveObjectForKey:(NSString *__nonnull)key
+                              resourceType:(NSString *__nonnull)type {
   //  Currently we support context only
   NSParameterAssert([type isEqualToString:@"context"]);
-  return [self.context stringForKey:key] ?: @"";
+  return [self.context objectForKey:key];
 }
 
 - (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator

@@ -11,7 +11,7 @@
 
 @implementation LEEvaluatorTestDataSource
 
-- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)textRenderer resolveStringForKey:(NSString *__nonnull)key resourceType:(NSString *__nonnull)type {
+- (__kindof NSObject* __nullable)evaluator:(LEEvaluator *__nonnull)textRenderer resolveObjectForKey:(NSString *__nonnull)key resourceType:(NSString *__nonnull)type {
   return [key uppercaseString];
 }
 

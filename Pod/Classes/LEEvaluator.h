@@ -18,11 +18,11 @@
  *  @param key       key
  *  @param type      resourceType, only `context` supported
  *
- *  @return evaluation result or a empty string
+ *  @return object for key
  */
-- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
-             resolveStringForKey:(NSString *__nonnull)key
-                    resourceType:(NSString *__nonnull)resourceType;
+- (__kindof NSObject *__nullable)evaluator:(LEEvaluator *__nonnull)evaluator
+                       resolveObjectForKey:(NSString *__nonnull)key
+                              resourceType:(NSString *__nonnull)resourceType;
 
 - (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
     resolveLocalizedStringForKey:(NSString *__nonnull)key;
@@ -35,6 +35,15 @@
  *  DataSource for string evaluation
  */
 @property(nonatomic, weak) id<LEEvaluatorDataSource> dataSource;
+
+- (__kindof NSObject *__nullable)resolveObjectForKey:(NSString *__nonnull)key
+                                        resourceType:(NSString *__nonnull)resourceType;
+
+- (NSString *__nonnull)resolveObjectAsStringForKey:(NSString *__nonnull)key
+                                      resourceType:(NSString *__nonnull)resourceType;
+
+- (NSNumber *__nonnull)resolveObjectAsNumberForKey:(NSString *__nonnull)key
+                                      resourceType:(NSString *__nonnull)resourceType;
 
 /**
  *  Evaluate a string

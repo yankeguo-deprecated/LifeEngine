@@ -17,6 +17,8 @@
 
 - (BOOL)evaluateOrOperator:(NSArray<NSDictionary *> *__nonnull)subConditions;
 
+- (BOOL)evaluateNotOperator:(NSDictionary *__nonnull)dictionary;
+
 #pragma mark - Common Operators
 
 /**

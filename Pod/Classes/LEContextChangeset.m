@@ -26,6 +26,9 @@
 - (instancetype)initWithRev:(NSUInteger)rev value:(NSObject<NSCopying, NSCoding> *__nullable)value key:(NSString *__nonnull)key {
   NSParameterAssert(key != nil);
   if (value == nil) value = [NSNull null];
+  NSParameterAssert([value isKindOfClass:[NSString class]] ||
+      [value isKindOfClass:[NSNumber class]] ||
+      [value isKindOfClass:[NSNull class]]);
   if (self = [super init]) {
     _rev = rev;
     _value = [value copy];

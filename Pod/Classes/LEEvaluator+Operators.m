@@ -38,6 +38,10 @@
   return result;
 }
 
+- (BOOL)evaluateNotOperator:(NSDictionary *__nonnull)dictionary {
+  return ![self evaluateConditionDictionary:dictionary];
+}
+
 #pragma mark - Common Operators
 
 - (BOOL)evaluateConditionWithCommonOperatorsOnly:(NSDictionary<NSString *, NSDictionary *> *__nonnull)dictionary {
@@ -91,7 +95,101 @@
 }
 
 - (BOOL)evaluateCommonOperator:(NSString *__nonnull)operator rawFrom:(NSString *__nonnull)rawFrom rawTo:(__kindof NSObject *__nonnull)rawTo {
-  //TODO: implement all kind of common operators
+  NSArray <NSString *> *fromComponents = [rawFrom componentsSeparatedByString:@"::"];
+  NSParameterAssert(fromComponents.count == 2);
+  NSString *resourceType = fromComponents.firstObject;
+  NSString *resourceKey = fromComponents.lastObject;
+  if ([operator hasSuffix:@"Number"]) {
+    //  Extract from / to
+    NSNumber *from = [self resolveObjectAsNumberForKey:resourceKey resourceType:resourceType];
+    NSNumber *to = nil;
+    if ([rawTo isKindOfClass:[NSNumber class]]) {
+      to = (NSNumber *) rawTo;
+    } else if ([rawTo isKindOfClass:[NSString class]]) {
+      to = [self evaluateStringAsNumber:(NSString *) rawTo];
+    } else {
+      to = @(0);
+    }
+    NSComparisonResult result = [from compare:to];
+    if ([operator isEqualToString:@"NumberEquals"]) {
+      return result == NSOrderedSame;
+    } else if ([operator isEqualToString:@"NumberNotEquals"]) {
+      return result != NSOrderedSame;
+    } else if ([operator isEqualToString:@"NumberGreaterThan"]) {
+      return result == NSOrderedDescending;
+    } else if ([operator isEqualToString:@"NumberGreaterThanEquals"]) {
+      return result == NSOrderedDescending || result == NSOrderedSame;
+    } else if ([operator isEqualToString:@"NumberLessThan"]) {
+      return result == NSOrderedAscending;
+    } else if ([operator isEqualToString:@"NumberLessThanEquals"]) {
+      return result == NSOrderedAscending || result == NSOrderedSame;
+    }
+  } else if ([operator hasSuffix:@"String"]) {
+    NSString *from = [self resolveObjectAsStringForKey:resourceKey resourceType:resourceType];
+    if ([operator rangeOfString:@"Matches"].location != NSNotFound) {
+      //  Extract to without evaluation
+      NSString *to = nil;
+      if ([rawTo isKindOfClass:[NSString class]]) {
+        to = (NSString *) rawTo;
+      } else if ([rawTo isKindOfClass:[NSNumber class]]) {
+        to = [(NSNumber *) rawTo stringValue];
+      } else {
+        to = @"";
+      }
+      NSRegularExpression *toRegExp = [[NSRegularExpression alloc] initWithPattern:to options:0 error:nil];
+      NSLog(@"%@ is not a valid regexp", to);
+      NSUInteger numberOfMatches = [toRegExp numberOfMatchesInString:from options:0 range:NSMakeRange(0, from.length)];
+      if (toRegExp == nil) return NO;
+      if ([operator isEqualToString:@"StringMatches"]) {
+        return numberOfMatches > 0;
+      } else if ([operator isEqualToString:@"StringNotMatches"]) {
+        return numberOfMatches == 0;
+      }
+    } else {
+      NSString *to = nil;
+      if ([rawTo isKindOfClass:[NSString class]]) {
+        to = [self evaluateString:(NSString *) rawTo];
+      } else if ([rawTo isKindOfClass:[NSNumber class]]) {
+        to = [((NSNumber *) rawTo) stringValue];
+      } else {
+        to = @"";
+      }
+      if ([operator isEqualToString:@"StringEquals"]) {
+        return [from isEqualToString:to];
+      } else if ([operator isEqualToString:@"StringEqualsIgnoreCase"]) {
+        return [[from lowercaseString] isEqualToString:[to lowercaseString]];
+      } else if ([operator isEqualToString:@"StringNotEquals"]) {
+        return ![from isEqualToString:to];
+      } else if ([operator isEqualToString:@"StringNotEqualsIgnoreCase"]) {
+        return ![[from lowercaseString] isEqualToString:[to lowercaseString]];
+      }
+    }
+  } else if ([operator isEqualToString:@"Boolean"]) {
+    NSObject *from = [self resolveObjectForKey:resourceKey resourceType:resourceType];
+    NSNumber *to = (NSNumber *) rawTo;
+    NSParameterAssert([to isKindOfClass:[NSNumber class]]);
+    if ([from isKindOfClass:[NSString class]]) {
+      //  NSString.length VS true/false
+      return (to.boolValue && ((NSString *) from).length != 0) ||
+          ((!to.boolValue) && ((NSString *) from).length == 0);
+    } else if ([from isKindOfClass:[NSNumber class]]) {
+      //  NSNumber.boolValue VS true/false
+      return (to.boolValue && ((NSNumber *) from).boolValue) ||
+          ((!to.boolValue) && (!((NSNumber *) from).boolValue));
+    } else {
+      //  NSObject == nil VS true/false
+      return (to.boolValue && from != nil) ||
+          ((!to.boolValue) && from == nil);
+    }
+  } else if ([operator isEqualToString:@"Null"]) {
+    NSObject *from = [self resolveObjectForKey:resourceKey resourceType:resourceType];
+    NSNumber *to = (NSNumber *) rawTo;
+    NSParameterAssert([to isKindOfClass:[NSNumber class]]);
+    //  NSObject == nil VS true/false
+    return (to.boolValue && from != nil) ||
+        ((!to.boolValue) && from == nil);
+  }
+  NSAssert(NO, @"operator not supported: %@", operator);
   return NO;
 }
 

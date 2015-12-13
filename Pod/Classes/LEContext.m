@@ -54,6 +54,14 @@
   return [self numberFromObject:self.context[key]];
 }
 
+- (__kindof NSObject *__nullable)objectForKey:(NSString *__nonnull)key {
+  NSObject *value = self.context[key];
+  if ([value isKindOfClass:[NSNull class]] || value == nil) {
+    return nil;
+  }
+  return value;
+}
+
 - (NSString *__nullable)stringForKey:(NSString *__nonnull)key {
   return [self stringFromObject:self.context[key]];
 }
