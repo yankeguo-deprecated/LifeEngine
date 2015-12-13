@@ -33,21 +33,25 @@ NSString *const __nonnull LEContextPersistenceDirectory = @"context";
 }
 
 - (NSString *__nonnull)persistenceFilePathForRev:(NSUInteger)rev {
-  return [self.persistencePath stringByAppendingPathComponent:[NSString stringWithFormat:@"rev-%@.plist", @(rev)]];
+  return [self.persistencePath stringByAppendingPathComponent:[NSString stringWithFormat:@"rev-%@.json", @(rev)]];
 }
 
 - (NSArray<LEContextChangeset *> *__nonnull)allChangesetsForContext:(LEContext *__nonnull)context {
   NSArray<NSString *> *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.persistencePath
                                                                                    error:nil];
-  NSMutableArray<LEContextChangeset *> *changesets = [[NSMutableArray alloc] initWithCapacity:files.count];
+  NSMutableArray *changesets = [[NSMutableArray alloc] initWithCapacity:files.count];
   [files enumerateObjectsUsingBlock:^(NSString *file, NSUInteger idx, BOOL *stop) {
-    if ([[file pathExtension].lowercaseString isEqualToString:@"plist"]) {
-      NSDictionary *dictionary =
-          [NSDictionary dictionaryWithContentsOfFile:[self.persistencePath stringByAppendingPathComponent:file]];
-      if (dictionary) {
-        [changesets addObject:[LEContextChangeset changesetWithDictionary:dictionary]];
+    if ([[file pathExtension].lowercaseString isEqualToString:@"json"]) {
+      NSData *data = [NSData dataWithContentsOfFile:[self.persistencePath stringByAppendingPathComponent:file]];
+      if (data) {
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if ([dictionary isKindOfClass:[NSDictionary class]]) {
+          [changesets addObject:[LEContextChangeset changesetWithDictionary:dictionary]];
+        } else {
+          NSLog(@"Failed to load %@ as dictionary", file);
+        }
       } else {
-        NSLog(@"Failed to load changeset: %@", file);
+        NSLog(@"Failed to load %@ as data", file);
       }
     }
   }];
@@ -55,8 +59,12 @@ NSString *const __nonnull LEContextPersistenceDirectory = @"context";
 }
 
 - (void)context:(LEContext *__nonnull)context didAddChangeset:(LEContextChangeset *__nonnull)changeset {
-  [[changeset toDictionary] writeToFile:[self persistenceFilePathForRev:changeset.rev]
-                             atomically:YES];
+  NSData *data = [NSJSONSerialization dataWithJSONObject:[changeset toDictionary] options:0 error:nil];
+  if (data) {
+    [data writeToFile:[self persistenceFilePathForRev:changeset.rev] atomically:YES];
+  } else {
+    NSLog(@"cannot generate persistence file for changeset %@", changeset);
+  }
 }
 
 - (void)context:(LEContext *__nonnull)context didRemoveChangesetWithRev:(NSUInteger)rev {

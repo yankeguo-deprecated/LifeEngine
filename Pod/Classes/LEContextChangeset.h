@@ -15,51 +15,68 @@
 @property(nonatomic, readonly, assign) NSUInteger rev;
 
 /**
- *  Key for changeset
+ *  Change in Dictionary representation, NSNull, NSNumber, NSString can be used
  */
-@property(nonatomic, readonly, copy) NSString *__nonnull key;
-
-/**
- *  Value for changeset, supports NSString, NSNumber, NSNull only
- */
-@property(nonatomic, readonly, copy) NSObject<NSCopying, NSCoding> *__nonnull value;
+@property(nonatomic, readonly, strong) NSDictionary<NSString *, __kindof NSObject *> *__nonnull change;
 
 /**
  *  Create a new LEContextChangeset
  *
  *  @param rev   revision number
- *  @param value value, nil will be transformed to NSNull
- *  @param key   key
+ *  @param change dictionary of change
  *
  *  @return a new instance
  */
-+ (instancetype __nonnull)changesetWithRev:(NSUInteger)rev value:(NSObject<NSCopying, NSCoding> *__nullable)value key:(NSString *__nonnull)key;
++ (instancetype __nonnull)changesetWithRev:(NSUInteger)rev change:(NSDictionary *__nonnull)change;
+
+/**
+ *  Create a new LEContextChangeset
+ *
+ *  @param rev   revision number
+ *  @param change dictionary of change
+ *
+ *  @return a new instance
+ */
+- (instancetype __nonnull)initWithRev:(NSUInteger)rev change:(NSDictionary *__nonnull)change;
+
+#pragma mark - Persistence
 
 /**
  *  Create a new LEContextChangeset from NSDictionary
  *
- *  @param dictionary dictionary with 'rev', 'key', 'value'
+ *  @param dictionary dictionary with 'rev', 'change'
  *
  *  @return a new instance
  */
 + (instancetype __nonnull)changesetWithDictionary:(NSDictionary *__nonnull)dictionary;
 
 /**
- *  Create a new LEContextChangeset
- *
- *  @param rev   revision number
- *  @param value value, nil will be transformed to NSNull
- *  @param key   key
- *
- *  @return a new instance
- */
-- (instancetype __nonnull)initWithRev:(NSUInteger)rev value:(NSObject<NSCopying, NSCoding> *__nullable)value key:(NSString *__nonnull)key;
-
-/**
  *  Dump changeset to a dictionary
  *
- *  @return dictionary with 'rev', 'key', 'value'
+ *  @return dictionary with 'rev', 'change'
  */
 - (NSDictionary *__nonnull)toDictionary;
+
+#pragma mark - Manipulation
+
+/**
+ *  Create a new changeset with new object for key added
+ *
+ *  @param object object, only NSString, NSString, NSNull supported
+ *  @param key    key
+ *
+ *  @return new instance
+ */
+- (instancetype __nonnull)changesetByAddingObject:(__kindof NSObject *__nullable)object
+                                           forKey:(NSString *__nonnull)key;
+
+/**
+ *  Create a new changeset with new change added
+ *
+ *  @param change change dictionary, only NSString, NSNumber, NSNull supported
+ *
+ *  @return new instance
+ */
+- (instancetype __nonnull)changesetByAddChange:(NSDictionary<NSString *, __kindof NSObject *> *__nonnull)change;
 
 @end
