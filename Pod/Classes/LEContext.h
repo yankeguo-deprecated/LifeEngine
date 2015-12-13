@@ -83,7 +83,17 @@
  *  @param key    key for object
  *  @param rev    revision number for tracking
  */
-- (void)setObject:(NSObject<NSCopying, NSCoding> *__nullable)object forKey:(NSString *__nonnull)key atRev:(NSUInteger)rev;
+- (void)setObject:(NSObject<NSCopying, NSCoding> *__nullable)object
+           forKey:(NSString *__nonnull)key
+            atRev:(NSUInteger)rev;
+
+/**
+ *  Add change from dictionary at rev
+ *
+ *  @param change change dictionary, contains NSString, NSNumber, NSNull only
+ *  @param rev    rev
+ */
+- (void)addChange:(NSDictionary<NSString *, __kindof NSObject *> *__nonnull)change atRev:(NSUInteger)rev;
 
 /**
  *  Remote a value for key, will invoke persistanceDelegate

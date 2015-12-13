@@ -68,11 +68,36 @@
 
 - (void)setObject:(NSObject<NSCopying, NSCoding> *__nullable)object forKey:(NSString *__nonnull)key atRev:(NSUInteger)rev {
   if (object == nil) object = [NSNull null];
-  LEContextChangeset *changeset = [LEContextChangeset changesetWithRev:rev value:object key:key];
+  //  Reuse existing changeset or create a new one
+  LEContextChangeset *changeset = self.changesets[@(rev)];
+  if (changeset) {
+    changeset = [changeset changesetByAddingObject:object forKey:key];
+  } else {
+    changeset = [LEContextChangeset changesetWithRev:rev change:@{key : object}];
+  }
+  //  Update
   [self.changesetRevs addIndex:changeset.rev];
   self.changesets[@(changeset.rev)] = changeset;
   //  Persistence
   [self.persistenceDelegate context:self didAddChangeset:changeset];
+  //  Rebuild
+  [self rebuild];
+}
+
+- (void)addChange:(NSDictionary *__nonnull)change atRev:(NSUInteger)rev {
+  //  Reuse existing changeset or create a new one
+  LEContextChangeset *changeset = self.changesets[@(rev)];
+  if (changeset) {
+    changeset = [changeset changesetByAddChange:change];
+  } else {
+    changeset = [LEContextChangeset changesetWithRev:rev change:change];
+  }
+  //  Update
+  [self.changesetRevs addIndex:changeset.rev];
+  self.changesets[@(changeset.rev)] = changeset;
+  //  Persistence
+  [self.persistenceDelegate context:self didAddChangeset:changeset];
+  //  Rebuild
   [self rebuild];
 }
 
@@ -87,16 +112,20 @@
 
   [self.changesetRevs enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
     LEContextChangeset *changeset = self.changesets[@(idx)];
-    self.context[changeset.key] = changeset.value;
+    [changeset.change enumerateKeysAndObjectsUsingBlock:^(NSString *key, __kindof NSObject *obj, BOOL *stop2) {
+      self.context[key] = obj;
+    }];
   }];
 }
 
 - (void)load {
+  //  Update
   NSArray *changesets = [self.persistenceDelegate allChangesetsForContext:self];
   [changesets enumerateObjectsUsingBlock:^(LEContextChangeset *changeset, NSUInteger idx, BOOL *stop) {
     [self.changesetRevs addIndex:changeset.rev];
     self.changesets[@(changeset.rev)] = changeset;
   }];
+  //  Rebuild
   [self rebuild];
 }
 
@@ -105,20 +134,24 @@
   [self.changesetRevs enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
     [self.persistenceDelegate context:self didRemoveChangesetWithRev:idx];
   }];
+  //  Update
   [self.context removeAllObjects];
   [self.changesets removeAllObjects];
   [self.changesetRevs removeAllIndexes];
 }
 
 - (void)removeChangesetAtRev:(NSUInteger)rev {
+  //  Update
   [self.changesetRevs removeIndex:rev];
   [self.changesets removeObjectForKey:@(rev)];
   //  Persistence
   [self.persistenceDelegate context:self didRemoveChangesetWithRev:rev];
+  //  Rebuild
   [self rebuild];
 }
 
 - (void)rollbackToRev:(NSUInteger)rev {
+  //  Update
   NSUInteger revToRevmoe = NSNotFound;;
   while ((revToRevmoe = [self.changesetRevs indexGreaterThanIndex:rev]) != NSNotFound) {
     [self.changesetRevs removeIndex:revToRevmoe];
@@ -126,6 +159,7 @@
     //  Persistence
     [self.persistenceDelegate context:self didRemoveChangesetWithRev:revToRevmoe];
   }
+  //  Rebuild
   [self rebuild];
 }
 
