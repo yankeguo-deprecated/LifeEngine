@@ -25,7 +25,6 @@
 
 - (LEScene *__nonnull)sceneWithIdentifier:(NSString *__nonnull)identifier {
   NSDictionary *dictionary = [self.cache objectForKey:identifier];
-  NSArray<NSDictionary *> *rawItems = nil;
 
   //  Resolve dictionary and rawItems
   if (dictionary == nil) {
@@ -34,27 +33,13 @@
     dictionary = [NSJSONSerialization JSONObjectWithData:rawScene options:0 error:nil];
     NSParameterAssert([dictionary isKindOfClass:[NSDictionary class]]);
     NSParameterAssert([((NSString *) dictionary[@"identifier"]) isEqualToString:identifier]);
-    rawItems = dictionary[@"items"];
+    NSArray *rawItems = dictionary[@"items"];
+    NSParameterAssert([rawItems isKindOfClass:[NSArray class]]);
     [self.cache setObject:dictionary forKey:identifier cost:rawItems.count];
-  } else {
-    rawItems = dictionary[@"items"];
   }
 
   //  Create scene
-  LEScene *scene = [[LEScene alloc] init];
-
-  scene.identifier = [identifier copy];
-
-  NSMutableArray<__kindof LEItem *> *items = [[NSMutableArray alloc] initWithCapacity:rawItems.count];
-  [rawItems enumerateObjectsUsingBlock:^(NSDictionary *rawItem, NSUInteger index, BOOL *stop) {
-    [items addObject:[LEItem itemWithDictionary:[rawItem copy]
-                                sceneIdentifier:[identifier copy]
-                                          index:index]];
-  }];
-
-  scene.items = items;
-
-  return scene;
+  return [LEScene sceneWithDictionary:dictionary];
 }
 
 @end
