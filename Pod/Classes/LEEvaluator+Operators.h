@@ -78,4 +78,12 @@
                        rawFrom:(NSString *__nonnull)rawFrom
                          rawTo:(__kindof NSObject *__nonnull)rawTo;
 
+#pragma mark - Action
+
+- (void)evaluateSetActionWithMixin:(__kindof NSObject *__nonnull)object
+                            forKey:(NSString *__nonnull)key;
+
+- (void)evaluateAddActionWithMixin:(__kindof NSObject *__nonnull)object
+                            forKey:(NSString *__nonnull)key;
+
 @end

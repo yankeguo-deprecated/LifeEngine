@@ -106,6 +106,49 @@
   return [self evaluateConditionWithCommonOperatorsOnly:dictionary];
 }
 
+- (void)evaluateActionDictionary:(NSDictionary *__nonnull)action {
+  NSParameterAssert([action isKindOfClass:[NSDictionary class]]);
+  [action enumerateKeysAndObjectsUsingBlock:^(NSString *actionName, NSDictionary *actionTarget, BOOL *stop) {
+    if ([actionName isEqualToString:@"Set"]) {
+      [actionTarget enumerateKeysAndObjectsUsingBlock:^(NSString *key, __kindof NSObject *obj, BOOL *stop2) {
+        [self evaluateSetActionWithMixin:obj forKey:key];
+      }];
+    } else if ([actionName isEqualToString:@"Add"]) {
+      [actionTarget enumerateKeysAndObjectsUsingBlock:^(NSString *key, __kindof NSObject *obj, BOOL *stop2) {
+        [self evaluateAddActionWithMixin:obj forKey:key];
+      }];
+    }
+  }];
+}
+
+- (void)evaluateActionDictionaries:(NSArray<NSDictionary *> *__nonnull)actions {
+  [actions enumerateObjectsUsingBlock:^(NSDictionary *action, NSUInteger idx, BOOL *stop) {
+    [self evaluateActionDictionary:action];
+  }];
+}
+
+- (void)evaluateConditionalActionDictionary:(NSDictionary *__nonnull)conditionalAction {
+  [self evaluateConditionalActionDictionaries:@[conditionalAction]];
+}
+
+- (void)evaluateConditionalActionDictionaries:(NSArray<NSDictionary *> *__nonnull)conditionalActions {
+  NSParameterAssert([conditionalActions isKindOfClass:[NSArray class]]);
+
+  [conditionalActions enumerateObjectsUsingBlock:^(NSDictionary *conditionalAction, NSUInteger idx, BOOL *stop) {
+    BOOL success = YES;
+    NSDictionary *conditionDictionary = conditionalAction[@"If"];
+    if ([conditionDictionary isKindOfClass:[NSDictionary class]]) {
+      success &= [self evaluateConditionDictionary:conditionDictionary];
+    }
+    if (success) {
+      //  do action
+      [self evaluateActionDictionary:conditionalAction[@"Do"]];
+      //  continue next clause on demand
+      *stop = [conditionalAction[@"continue"] boolValue];
+    }
+  }];
+}
+
 #pragma mark - Helpers
 
 - (NSString *__nonnull)stringFromObject:(NSObject *__nullable)object {

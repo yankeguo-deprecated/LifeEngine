@@ -15,12 +15,6 @@
 
 @interface LEGame ()<LEEvaluatorDataSource>
 
-@property(nonatomic, readonly) LEI18n *__nonnull i18n;
-
-@property(nonatomic, readonly) LEContext *__nonnull context;
-
-@property(nonatomic, readonly) LEEvaluator *__nonnull evaluator;
-
 @property(nonatomic, readonly) LESceneLoader *__nonnull sceneLoader;
 
 @property(nonatomic, readonly) LEContextPersistence *__nonnull contextPersistence;
@@ -58,6 +52,12 @@
 - (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
     resolveLocalizedStringForKey:(NSString *__nonnull)key {
   return [self.i18n localizedStringForKey:key] ?: @"";
+}
+
+- (void)evaluator:(LEEvaluator *__nonnull)evaluator
+        setObject:(__kindof NSObject *__nonnull)object
+           forKey:(NSString *__nonnull)key
+     resourceType:(NSString *__nonnull)resourceType {
 }
 
 @end

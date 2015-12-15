@@ -23,9 +23,29 @@
 - (__kindof NSObject *__nullable)evaluator:(LEEvaluator *__nonnull)evaluator
                        resolveObjectForKey:(NSString *__nonnull)key
                               resourceType:(NSString *__nonnull)resourceType;
-
+/**
+ *  Resolve a localized string
+ *
+ *  @param evaluator LEEvaluator
+ *  @param key       i18n key
+ *
+ *  @return localized string
+ */
 - (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
     resolveLocalizedStringForKey:(NSString *__nonnull)key;
+
+/**
+ *  Set a object for key with resourceType, basically for context set
+ *
+ *  @param evaluator    LEEvaluator
+ *  @param object       object, NSNumber, NSString or NSNull
+ *  @param key          key
+ *  @param resourceType resourceType
+ */
+- (void)evaluator:(LEEvaluator *__nonnull)evaluator
+        setObject:(__kindof NSObject *__nonnull)object
+           forKey:(NSString *__nonnull)key
+     resourceType:(NSString *__nonnull)resourceType;
 
 @end
 
@@ -67,5 +87,25 @@
  *  @return evaluation result
  */
 - (BOOL)evaluateConditionDictionary:(NSDictionary *__nonnull)dictionary;
+
+/**
+ *  Evaluate a action dictionary
+ *
+ *  @see https://github.com/IslandZero/LifeEngine/wiki/Action-Dictionary
+ *
+ *  @param action action dictionary
+ */
+- (void)evaluateActionDictionary:(NSDictionary *__nonnull)action;
+- (void)evaluateActionDictionaries:(NSArray<NSDictionary *> *__nonnull)actions;
+
+/**
+ *  Evaluate a condictional dictionary
+ *
+ *  @see https://github.com/IslandZero/LifeEngine/wiki/Conditional-Action-Dictionary
+ *
+ *  @param conditionalActions conditionalActions, NSArray of dictionary
+ */
+- (void)evaluateConditionalActionDictionary:(NSDictionary *__nonnull)conditionalAction;
+- (void)evaluateConditionalActionDictionaries:(NSArray<NSDictionary *> *__nonnull)conditionalActions;
 
 @end
