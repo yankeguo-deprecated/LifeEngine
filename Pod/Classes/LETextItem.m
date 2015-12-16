@@ -31,7 +31,7 @@
   dictionary[@"rendered_text"] = self.renderedText;
 }
 
-- (void)didDisplayInGame:(LEGame *__nonnull)game {
+- (void)didPresent:(LEGame *__nonnull)game {
   [game advanceTowardNextItem];
 }
 

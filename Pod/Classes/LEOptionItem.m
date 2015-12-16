@@ -52,8 +52,8 @@
   dictionary[@"options"] = [LEOptionItemOption arrayOfDictionariesFromArrayOfSerializables:self.options];
 }
 
-- (void)handleInput:(NSString *__nonnull)input inGame:(LEGame *__nonnull)game {
-  [super handleInput:input inGame:game];
+- (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull)input {
+  [super game:game handleInput:input];
 
   [self.options enumerateObjectsUsingBlock:^(LEOptionItemOption *obj, NSUInteger idx, BOOL *stop) {
     if ([obj.identifier isEqualToString:input]) {

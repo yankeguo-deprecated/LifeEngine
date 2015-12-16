@@ -10,14 +10,17 @@
 #import "LEEvaluator.h"
 #import "LEI18n.h"
 #import "LEContext.h"
-#import "LEContextPersistence.h"
 #import "LESceneLoader.h"
 
 @interface LEGame ()<LEEvaluatorDataSource>
 
-@property(nonatomic, readonly) LESceneLoader *__nonnull sceneLoader;
+@property(nonatomic, strong) LESceneLoader *__nonnull sceneLoader;
 
-@property(nonatomic, readonly) LEContextPersistence *__nonnull contextPersistence;
+@property(nonatomic, strong) LEI18n *__nonnull i18n;
+
+@property(nonatomic, strong) LEContext *__nonnull context;
+
+@property(nonatomic, strong) LEEvaluator *__nonnull evaluator;
 
 @end
 
@@ -25,18 +28,41 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    _i18n = [[LEI18n alloc] init];
+    self.i18n = [[LEI18n alloc] init];
 
-    _context = [[LEContext alloc] init];
-    _contextPersistence = [[LEContextPersistence alloc] init];
-    _context.persistenceDelegate = self.contextPersistence;
+    self.context = [[LEContext alloc] init];
 
-    _sceneLoader = [[LESceneLoader alloc] init];
+    self.sceneLoader = [[LESceneLoader alloc] init];
 
-    _evaluator = [[LEEvaluator alloc] init];
-    _evaluator.dataSource = self;
+    self.evaluator = [[LEEvaluator alloc] init];
+    self.evaluator.dataSource = self;
   }
   return self;
+}
+
+#pragma mark - Getter / Setter
+
+- (void)setContextPersistenceAdapter:(id<LEContextPersistenceAdapter>)contextPersistenceAdapter {
+  self.context.persistenceAdapter = contextPersistenceAdapter;
+}
+
+- (id<LEContextPersistenceAdapter>)contextPersistenceAdapter {
+  return self.context.persistenceAdapter;
+}
+
+- (void)setSceneLoaderPersistenceAdapter:(id<LESceneLoaderPersistenceAdapter>)sceneLoaderPersistenceAdapter {
+  self.sceneLoader.persistenceAdapter = sceneLoaderPersistenceAdapter;
+}
+
+- (id<LESceneLoaderPersistenceAdapter>)sceneLoaderPersistenceAdapter {
+  return self.sceneLoader.persistenceAdapter;
+}
+
+#pragma mark - LifeCycle
+
+- (void)load {
+  NSParameterAssert(self.context.persistenceAdapter != nil);
+  [self.context load];
 }
 
 #pragma mark - TextRendererDataSource
@@ -49,15 +75,26 @@
   return [self.context objectForKey:key];
 }
 
-- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
-    resolveLocalizedStringForKey:(NSString *__nonnull)key {
-  return [self.i18n localizedStringForKey:key] ?: @"";
-}
-
 - (void)evaluator:(LEEvaluator *__nonnull)evaluator
         setObject:(__kindof NSObject *__nonnull)object
            forKey:(NSString *__nonnull)key
      resourceType:(NSString *__nonnull)resourceType {
+  //TODO: implement
+}
+
+#pragma mark - History Query
+
+- (NSUInteger)numberOfHistoryItems {
+  return 0;
+}
+
+- (LEItem *)historyItemAtIndex:(NSUInteger)index {
+  return nil;
+}
+
+#pragma mark - Game Flow
+
+- (void)handleInput:(NSString *__nonnull)input {
 }
 
 - (BOOL)advanceTowardNextItem {

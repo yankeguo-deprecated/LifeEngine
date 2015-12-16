@@ -28,9 +28,7 @@
 
   //  Resolve dictionary and rawItems
   if (dictionary == nil) {
-    NSData *rawScene = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] URLForResource:identifier
-                                                                             withExtension:@"scene.json"]];
-    dictionary = [NSJSONSerialization JSONObjectWithData:rawScene options:0 error:nil];
+    dictionary = [self.persistenceAdapter rawSceneWithIdentifier:identifier];
     NSParameterAssert([dictionary isKindOfClass:[NSDictionary class]]);
     NSParameterAssert([((NSString *) dictionary[@"id"]) isEqualToString:identifier]);
     NSArray *rawItems = dictionary[@"items"];

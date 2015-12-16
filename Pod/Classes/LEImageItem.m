@@ -28,7 +28,7 @@
   dictionary[@"image_name"] = self.imageName;
 }
 
-- (void)didDisplayInGame:(LEGame *__nonnull)game {
+- (void)didPresent:(LEGame *__nonnull)game {
   [game advanceTowardNextItem];
 }
 

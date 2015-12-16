@@ -18,4 +18,9 @@ it(@"should work with seperated files", ^{
   XCTAssertEqualObjects(@"Downtown", [i18n localizedStringForKey:@"addresses.downtown"]);
 });
 
+it(@"should work with render text", ^{
+  LEI18n* i18n = [[LEI18n alloc] init];
+  XCTAssertEqualObjects(@"I'm from Downtown", [i18n renderString:@"I'm from @{addresses.downtown}"]);
+});
+
 SpecEnd

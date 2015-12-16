@@ -23,16 +23,6 @@
 - (__kindof NSObject *__nullable)evaluator:(LEEvaluator *__nonnull)evaluator
                        resolveObjectForKey:(NSString *__nonnull)key
                               resourceType:(NSString *__nonnull)resourceType;
-/**
- *  Resolve a localized string
- *
- *  @param evaluator LEEvaluator
- *  @param key       i18n key
- *
- *  @return localized string
- */
-- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
-    resolveLocalizedStringForKey:(NSString *__nonnull)key;
 
 /**
  *  Set a object for key with resourceType, basically for context set

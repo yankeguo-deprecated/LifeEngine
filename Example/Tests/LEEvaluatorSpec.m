@@ -84,12 +84,7 @@ SpecBegin(LEEvaluator)
     it(@"should work with resource", ^{
       XCTAssertEqualObjects(@"hello world", [_evaluator evaluateString:@"${context::h} ${context::w}"]);
     });
-    it(@"should work with i18n", ^{
-      XCTAssertEqualObjects(@"ab c", [_evaluator evaluateString:@"a@{B} @{C}"]);
-    });
-    it(@"should work with mixed resource and i18n", ^{
-      XCTAssertEqualObjects(@"hello world c", [_evaluator evaluateString:@"${context::h} ${context::w} @{C}"]);
-    });
+    
   });
 
   describe(@"evaluate string as number", ^{

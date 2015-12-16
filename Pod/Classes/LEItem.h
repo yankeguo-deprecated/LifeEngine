@@ -17,8 +17,10 @@ extern NSString *const __nonnull LEItemClassKey;
 
 #pragma mark - For Subclass
 
-- (void)didDisplayInGame:(LEGame *__nonnull)game;
+- (void)willPresent:(LEGame *__nonnull)game;
 
-- (void)handleInput:(NSString *__nonnull)input inGame:(LEGame *__nonnull)game;
+- (void)didPresent:(LEGame *__nonnull)game;
+
+- (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull)input;
 
 @end

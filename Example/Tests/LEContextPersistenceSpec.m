@@ -5,17 +5,17 @@
 //  Created by Ryan Guo on 15/12/14.
 //
 
-#import <LifeEngine/LEContextPersistence.h>
+#import "LEContextDefaultPersistence.h"
 
 SpecBegin(LEContextPersistence)
 
   __block LEContext *_context;
-  __block LEContextPersistence *_persistence;
+  __block LEContextDefaultPersistence *_persistence;
 
   beforeAll(^{
     _context = [LEContext new];
-    _persistence = [LEContextPersistence new];
-    _context.persistenceDelegate = _persistence;
+    _persistence = [LEContextDefaultPersistence new];
+    _context.persistenceAdapter = _persistence;
   });
 
   it(@"should work with add", ^{
@@ -25,8 +25,8 @@ SpecBegin(LEContextPersistence)
     [_context setObject:@"A" forKey:@"key1" atRev:1];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"A", [context stringForKey:@"key1"]);
   });
@@ -39,8 +39,8 @@ SpecBegin(LEContextPersistence)
     [_context setObject:@"B" forKey:@"key2" atRev:1];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"A", [context stringForKey:@"key1"]);
     XCTAssertEqualObjects(@"B", [context stringForKey:@"key2"]);
@@ -54,8 +54,8 @@ SpecBegin(LEContextPersistence)
     [_context setObject:@"B" forKey:@"key1" atRev:1];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"B", [context stringForKey:@"key1"]);
   });
@@ -68,8 +68,8 @@ SpecBegin(LEContextPersistence)
     [_context setObject:@"B" forKey:@"key1" atRev:2];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"B", [context stringForKey:@"key1"]);
   });
@@ -82,8 +82,8 @@ SpecBegin(LEContextPersistence)
     [_context setObject:@"B" forKey:@"key1" atRev:2];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"B", [context stringForKey:@"key1"]);
     [context rollbackToRev:1];
@@ -97,8 +97,8 @@ SpecBegin(LEContextPersistence)
     [_context addChange:@{@"key1" : @"A", @"key2" : @"B"} atRev:1];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"A", [context stringForKey:@"key1"]);
     XCTAssertEqualObjects(@"B", [context stringForKey:@"key2"]);
@@ -112,8 +112,8 @@ SpecBegin(LEContextPersistence)
     [_context addChange:@{@"key3" : @"D", @"key2" : @"C"} atRev:2];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"A", [context stringForKey:@"key1"]);
     XCTAssertEqualObjects(@"C", [context stringForKey:@"key2"]);
@@ -128,8 +128,8 @@ SpecBegin(LEContextPersistence)
     [_context addChange:@{@"key3" : @"D", @"key2" : @"C"} atRev:2];
     //  Create new
     LEContext *context = [LEContext new];
-    LEContextPersistence *persistence = [LEContextPersistence new];
-    context.persistenceDelegate = persistence;
+    LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+    context.persistenceAdapter = persistence;
     [context load];
     XCTAssertEqualObjects(@"A", [context stringForKey:@"key1"]);
     XCTAssertEqualObjects(@"C", [context stringForKey:@"key2"]);
@@ -140,8 +140,8 @@ SpecBegin(LEContextPersistence)
     XCTAssertNil([context stringForKey:@"key3"]);
     {
       LEContext *context = [LEContext new];
-      LEContextPersistence *persistence = [LEContextPersistence new];
-      context.persistenceDelegate = persistence;
+      LEContextDefaultPersistence *persistence = [LEContextDefaultPersistence new];
+      context.persistenceAdapter = persistence;
       [context load];
       XCTAssertEqualObjects(@"A", [context stringForKey:@"key1"]);
       XCTAssertEqualObjects(@"B", [context stringForKey:@"key2"]);

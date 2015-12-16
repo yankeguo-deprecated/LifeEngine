@@ -79,7 +79,7 @@
   [self.changesetRevs addIndex:changeset.rev];
   self.changesets[@(changeset.rev)] = changeset;
   //  Persistence
-  [self.persistenceDelegate context:self didAddChangeset:changeset];
+  [self.persistenceAdapter context:self didAddChangeset:changeset];
   //  Rebuild
   [self rebuild];
 }
@@ -96,7 +96,7 @@
   [self.changesetRevs addIndex:changeset.rev];
   self.changesets[@(changeset.rev)] = changeset;
   //  Persistence
-  [self.persistenceDelegate context:self didAddChangeset:changeset];
+  [self.persistenceAdapter context:self didAddChangeset:changeset];
   //  Rebuild
   [self rebuild];
 }
@@ -120,7 +120,7 @@
 
 - (void)load {
   //  Update
-  NSArray *changesets = [self.persistenceDelegate allChangesetsForContext:self];
+  NSArray *changesets = [self.persistenceAdapter allChangesetsForContext:self];
   [changesets enumerateObjectsUsingBlock:^(LEContextChangeset *changeset, NSUInteger idx, BOOL *stop) {
     [self.changesetRevs addIndex:changeset.rev];
     self.changesets[@(changeset.rev)] = changeset;
@@ -132,7 +132,7 @@
 - (void)clear {
   //  Persistence
   [self.changesetRevs enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-    [self.persistenceDelegate context:self didRemoveChangesetWithRev:idx];
+    [self.persistenceAdapter context:self didRemoveChangesetWithRev:idx];
   }];
   //  Update
   [self.context removeAllObjects];
@@ -145,7 +145,7 @@
   [self.changesetRevs removeIndex:rev];
   [self.changesets removeObjectForKey:@(rev)];
   //  Persistence
-  [self.persistenceDelegate context:self didRemoveChangesetWithRev:rev];
+  [self.persistenceAdapter context:self didRemoveChangesetWithRev:rev];
   //  Rebuild
   [self rebuild];
 }
@@ -157,7 +157,7 @@
     [self.changesetRevs removeIndex:revToRevmoe];
     [self.changesets removeObjectForKey:@(revToRevmoe)];
     //  Persistence
-    [self.persistenceDelegate context:self didRemoveChangesetWithRev:revToRevmoe];
+    [self.persistenceAdapter context:self didRemoveChangesetWithRev:revToRevmoe];
   }
   //  Rebuild
   [self rebuild];

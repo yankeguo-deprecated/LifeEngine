@@ -13,6 +13,8 @@ NSString *const LEI18nDefaultGroupName = @"default";
 
 @interface LEI18n ()
 
+@property(nonatomic, strong) NSRegularExpression *__nonnull expressionI18n;
+
 @property(nonatomic, strong) NSCache<NSString *, LEI18nGroup *> *cache;
 @property(nonatomic, strong) NSCache<NSString *, NSString *> *directCache;
 
@@ -22,6 +24,10 @@ NSString *const LEI18nDefaultGroupName = @"default";
 
 - (instancetype)init {
   if (self = [super init]) {
+    self.expressionI18n = [NSRegularExpression regularExpressionWithPattern:@"@\\{(.+?)\\}"
+                                                                    options:NSRegularExpressionCaseInsensitive
+                                                                      error:nil];
+
     self.cache = [[NSCache alloc] init];
     self.cache.totalCostLimit = 2 * 100 * 1000;
 
@@ -41,6 +47,20 @@ NSString *const LEI18nDefaultGroupName = @"default";
   }
   if (result == nil) {
     result = key;
+  }
+  return result;
+}
+
+- (NSString *__nonnull)renderString:(NSString *__nonnull)string {
+  NSMutableString *result = [NSMutableString stringWithString:string];
+  NSTextCheckingResult *matchResult = nil;
+  while ((matchResult = [self.expressionI18n firstMatchInString:result
+                                                        options:0
+                                                          range:NSMakeRange(0, result.length)])) {
+    NSParameterAssert(matchResult.numberOfRanges == 2);
+    NSString *key = [result substringWithRange:[matchResult rangeAtIndex:1]];
+    [result replaceCharactersInRange:matchResult.range
+                          withString:[self localizedStringForKey:key]];
   }
   return result;
 }
