@@ -5,26 +5,20 @@
 //  Created by Ryan Guo on 15/12/11.
 //
 
-#import <Foundation/Foundation.h>
+#import "LESerializable.h"
+
+@class LEGame;
 
 extern NSString *const __nonnull LEItemClassKey;
 
-@interface LEItem: NSObject<NSCopying>
+@interface LEItem: LESerializable
 
-@property(nonatomic, readonly) NSString *__nonnull sceneIdentifier;
-
-@property(nonatomic, readonly, assign) NSUInteger index;
-
-+ (__kindof LEItem *__nonnull)itemWithDictionary:(NSDictionary *__nonnull)dictionary sceneIdentifier:(NSString *__nonnull)sceneIdentifier index:(NSUInteger)index;
-
-- (instancetype __nonnull)initWithDictionary:(NSDictionary *__nonnull)dictionary sceneIdentifier:(NSString *__nonnull)sceneIdentifier index:(NSUInteger)index;
-
-- (NSDictionary *__nonnull)toDictionary;
++ (__kindof LEItem *__nonnull)itemWithDictionary:(NSDictionary *__nonnull)dictionary;
 
 #pragma mark - For Subclass
 
-- (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary;
+- (void)didDisplayInGame:(LEGame *__nonnull)game;
 
-- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary;
+- (void)handleInput:(NSString *__nonnull)input inGame:(LEGame *__nonnull)game;
 
 @end

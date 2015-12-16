@@ -5,10 +5,10 @@
 //  Created by Ryan Guo on 15/12/11.
 //
 
-#import <Foundation/Foundation.h>
+#import "LESerializable.h"
 #import "LEItem.h"
 
-@interface LEScene: NSObject
+@interface LEScene: LESerializable
 
 @property(nonatomic, copy) NSString *__nonnull identifier;
 
@@ -17,9 +17,5 @@
 #pragma mark - Persistence
 
 + (instancetype __nonnull)sceneWithDictionary:(NSDictionary *__nonnull)dictionary;
-
-- (instancetype __nonnull)initWithDictionary:(NSDictionary *__nonnull)dictionary;
-
-- (NSDictionary *__nonnull)toDictionary;
 
 @end

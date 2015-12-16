@@ -12,11 +12,10 @@
 #import <LifeEngine/LEEvaluator.h>
 
 #import <LifeEngine/LEItem.h>
-#import <LifeEngine/LEDisplayItem.h>
 #import <LifeEngine/LETextItem.h>
 #import <LifeEngine/LEImageItem.h>
 #import <LifeEngine/LEWaitItem.h>
-#import <LifeEngine/LEActionItem.h>
+#import <LifeEngine/LEOptionItem.h>
 
 #import <LifeEngine/LEScene.h>
 

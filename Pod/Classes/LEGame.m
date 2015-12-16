@@ -60,4 +60,12 @@
      resourceType:(NSString *__nonnull)resourceType {
 }
 
+- (BOOL)advanceTowardNextItem {
+  return NO;
+}
+
+- (BOOL)advanceTowardNextItemAfter:(NSTimeInterval)time {
+  return NO;
+}
+
 @end

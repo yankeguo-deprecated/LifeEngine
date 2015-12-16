@@ -7,6 +7,7 @@
 //
 
 #import "LEImageItem.h"
+#import "LEGame.h"
 
 @interface LEImageItem ()
 
@@ -25,6 +26,10 @@
   [super dumpToDictionary:dictionary];
 
   dictionary[@"image_name"] = self.imageName;
+}
+
+- (void)didDisplayInGame:(LEGame *__nonnull)game {
+  [game advanceTowardNextItem];
 }
 
 @end

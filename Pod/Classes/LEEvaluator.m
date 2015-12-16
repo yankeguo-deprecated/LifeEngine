@@ -1,5 +1,8 @@
 //
-// Created by Yanke Guo on 15/12/13.
+//  LEEvaluator.m
+//  LifeEngine
+//
+//  Created by Ryan Guo on 15/12/13.
 //
 
 #import "LEEvaluator.h"

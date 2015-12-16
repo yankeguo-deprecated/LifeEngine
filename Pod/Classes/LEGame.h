@@ -19,4 +19,10 @@
 
 @property(nonatomic, readonly) LEEvaluator *__nonnull evaluator;
 
+#pragma mark - Game Control
+
+- (BOOL)advanceTowardNextItem;
+
+- (BOOL)advanceTowardNextItemAfter:(NSTimeInterval)time;
+
 @end

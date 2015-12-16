@@ -6,6 +6,7 @@
 //
 
 #import "LETextItem.h"
+#import "LEGame.h"
 
 @interface LETextItem ()
 
@@ -28,6 +29,10 @@
   dictionary[@"text"] = self.text;
   dictionary[@"style"] = self.style;
   dictionary[@"rendered_text"] = self.renderedText;
+}
+
+- (void)didDisplayInGame:(LEGame *__nonnull)game {
+  [game advanceTowardNextItem];
 }
 
 @end

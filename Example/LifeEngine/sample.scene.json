@@ -2,11 +2,11 @@
   "id": "sample",
   "items": [
     {
-      "class": "LETextItem",
+      "class": "text",
       "text": "@{alice} is here"
     },
     {
-      "class": "LEImageItem",
+      "class": "image",
       "image_name": "sample_scene"
     }
   ]

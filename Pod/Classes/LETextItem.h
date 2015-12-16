@@ -5,9 +5,9 @@
 //  Created by Ryan Guo on 15/12/11.
 //
 
-#import <LifeEngine/LifeEngine.h>
+#import "LEItem.h"
 
-@interface LETextItem: LEDisplayItem
+@interface LETextItem: LEItem
 
 @property(nonatomic, readonly) NSString *__nonnull text;
 

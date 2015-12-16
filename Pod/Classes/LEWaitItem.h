@@ -9,12 +9,12 @@
 
 @interface LEWaitItem: LEItem
 
-@property(nonatomic, readonly) NSTimeInterval time;
-
 @property(nonatomic, readonly) NSString *__nonnull text;
 
 @property(nonatomic, readonly) NSString *__nullable style;
 
 @property(nonatomic, copy) NSString *__nullable renderedText;
+
+@property(nonatomic, readonly) NSTimeInterval time;
 
 @end
