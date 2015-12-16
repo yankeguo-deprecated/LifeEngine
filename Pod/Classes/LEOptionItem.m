@@ -7,6 +7,7 @@
 
 #import "LEOptionItem.h"
 #import "LEGame.h"
+#import "LEI18n.h"
 
 @implementation LEOptionItemOption
 
@@ -50,6 +51,15 @@
   [super dumpToDictionary:dictionary];
 
   dictionary[@"options"] = [LEOptionItemOption arrayOfDictionariesFromArrayOfSerializables:self.options];
+}
+
+- (void)willPresent:(LEGame *__nonnull)game {
+  [super willPresent:game];
+
+  [self.options enumerateObjectsUsingBlock:^(LEOptionItemOption *obj, NSUInteger idx, BOOL *stop) {
+    obj.renderedText = [game.i18n renderString:obj.text];
+    obj.renderedText = [game.evaluator evaluateString:obj.renderedText];
+  }];
 }
 
 - (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull)input {

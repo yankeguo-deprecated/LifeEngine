@@ -7,7 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "LEI18n.h"
 #import "LEItem.h"
+#import "LEScene.h"
 #import "LEEvaluator.h"
 #import "LEContextPersistenceAdapter.h"
 #import "LESceneLoaderPersistenceAdapter.h"
@@ -28,7 +30,11 @@
 
 @property(nonatomic, readwrite) id<LESceneLoaderPersistenceAdapter> __nonnull sceneLoaderPersistenceAdapter;
 
-@property(nonatomic, readonly) LEEvaluator * __nonnull evaluator;
+@property(nonatomic, readonly) LEI18n *__nonnull i18n;
+
+@property(nonatomic, readonly) LEEvaluator *__nonnull evaluator;
+
+@property(nonatomic, readonly) LEScene *__nonnull currentScene;
 
 #pragma mark - LifeCycle
 
