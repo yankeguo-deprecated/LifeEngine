@@ -1,8 +1,8 @@
-identifier: 'sample'
+id: 'sample'
 items: [
-    __class: 'LETextItem'
+    class: 'LETextItem'
     text: "@{alice} is here"
   ,
-    __class: 'LEImageItem'
+    class: 'LEImageItem'
     image_name: 'sample_scene'
 ]

@@ -1,36 +1,36 @@
 {
   "text": {
-    "__class": "LETextItem",
+    "class": "LETextItem",
     "text": "Sample",
     "style": "green"
   },
   "text_pre_rendered": {
-    "__class": "LETextItem",
+    "class": "LETextItem",
     "text": "Sample",
     "rendered_text": "Sample2",
     "style": "green"
   },
   "image": {
-    "__class": "LEImageItem",
+    "class": "LEImageItem",
     "image_name": "sample_image"
   },
   "wait_number": {
-    "__class": "LEWaitItem",
+    "class": "LEWaitItem",
     "time": 200,
     "text": "Sample"
   },
   "wait_string": {
-    "__class": "LEWaitItem",
+    "class": "LEWaitItem",
     "time": "1.5h",
     "text": "Sample"
   },
   "wait_string2": {
-    "__class": "LEWaitItem",
+    "class": "LEWaitItem",
     "time": "2m",
     "text": "Sample"
   },
   "wait_string3": {
-    "__class": "LEWaitItem",
+    "class": "LEWaitItem",
     "time": "1.5d",
     "text": "Sample"
   }

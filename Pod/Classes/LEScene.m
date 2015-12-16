@@ -21,7 +21,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *__nonnull)dictionary {
   if (self = [super init]) {
-    self.identifier = dictionary[@"identifier"];
+    self.identifier = dictionary[@"id"];
     NSParameterAssert([self.identifier isKindOfClass:[NSString class]]);
 
     NSArray<NSDictionary *> *rawItems = dictionary[@"items"];
@@ -41,7 +41,7 @@
   [self.items enumerateObjectsUsingBlock:^(__kindof LEItem *item, NSUInteger idx, BOOL *stop) {
     [rawItems addObject:[item toDictionary]];
   }];
-  return @{@"identifier" : self.identifier, @"items" : rawItems};
+  return @{@"id" : self.identifier, @"items" : rawItems};
 }
 
 @end

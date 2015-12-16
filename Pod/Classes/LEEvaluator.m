@@ -144,7 +144,9 @@
       //  do action
       [self evaluateActionDictionary:conditionalAction[@"Do"]];
       //  continue next clause on demand
-      *stop = [conditionalAction[@"continue"] boolValue];
+      if (![conditionalAction[@"Continue"] boolValue]) {
+        *stop = YES;
+      }
     }
   }];
 }

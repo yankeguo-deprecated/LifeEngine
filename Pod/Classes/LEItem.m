@@ -7,7 +7,7 @@
 
 #import "LEItem.h"
 
-NSString *const __nonnull LEItemClassKey = @"__class";
+NSString *const __nonnull LEItemClassKey = @"class";
 
 @interface LEItem () {
   NSString *_sceneIdentifier;
