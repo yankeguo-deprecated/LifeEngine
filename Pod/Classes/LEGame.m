@@ -40,29 +40,12 @@
   return self;
 }
 
-#pragma mark - Getter / Setter
-
-- (void)setContextPersistenceAdapter:(id<LEContextPersistenceAdapter>)contextPersistenceAdapter {
-  self.context.persistenceAdapter = contextPersistenceAdapter;
-}
-
-- (id<LEContextPersistenceAdapter>)contextPersistenceAdapter {
-  return self.context.persistenceAdapter;
-}
-
-- (void)setSceneLoaderPersistenceAdapter:(id<LESceneLoaderPersistenceAdapter>)sceneLoaderPersistenceAdapter {
-  self.sceneLoader.persistenceAdapter = sceneLoaderPersistenceAdapter;
-}
-
-- (id<LESceneLoaderPersistenceAdapter>)sceneLoaderPersistenceAdapter {
-  return self.sceneLoader.persistenceAdapter;
-}
-
 #pragma mark - LifeCycle
 
 - (void)load {
-  NSParameterAssert(self.context.persistenceAdapter != nil);
+  NSParameterAssert(self.sceneLoader.persistenceAdapter != nil);
   [self.context load];
+  [self.history load];
 }
 
 #pragma mark - TextRendererDataSource
@@ -80,16 +63,6 @@
            forKey:(NSString *__nonnull)key
      resourceType:(NSString *__nonnull)resourceType {
   //TODO: implement
-}
-
-#pragma mark - History Query
-
-- (NSUInteger)numberOfHistoryItems {
-  return 0;
-}
-
-- (LEItem *)historyItemAtIndex:(NSUInteger)index {
-  return nil;
 }
 
 #pragma mark - Game Flow

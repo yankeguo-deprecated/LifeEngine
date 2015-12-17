@@ -119,6 +119,7 @@
 }
 
 - (void)load {
+  NSParameterAssert(self.persistenceAdapter != nil);
   //  Update
   NSArray *changesets = [self.persistenceAdapter allChangesetsForContext:self];
   [changesets enumerateObjectsUsingBlock:^(LEContextChangeset *changeset, NSUInteger idx, BOOL *stop) {

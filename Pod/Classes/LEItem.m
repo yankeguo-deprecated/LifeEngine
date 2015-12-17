@@ -65,7 +65,13 @@ NSDictionary *__nonnull LEItemBuiltinClassShortcuts;
 #pragma mark - For Subclass
 
 - (void)willPresent:(LEGame *__nonnull)game { }
+
 - (void)didPresent:(LEGame *__nonnull)game { }
+
+- (void)didMoveToHistory:(LEGame *__nonnull)game { }
+
+- (void)willMoveToHistory:(LEGame *__nonnull)game { }
+
 - (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull) input { }
 
 @end

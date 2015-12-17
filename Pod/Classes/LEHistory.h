@@ -7,6 +7,20 @@
 
 #import <Foundation/Foundation.h>
 
+#import "LEItem.h"
+#import "LEHistoryEntry.h"
+#import "LEHistoryPersistenceAdapter.h"
+
 @interface LEHistory: NSObject
+
+@property(nonatomic, retain) id<LEHistoryPersistenceAdapter> __nonnull persistenceAdapter;
+
+@property(nonatomic, readonly) NSUInteger numberOfEntries;
+
+- (void)load;
+
+- (LEHistoryEntry *__nonnull)entryAtIndex:(NSUInteger)index;
+
+- (void)appendEntryForItem:(__kindof LEItem *__nonnull)item withSceneIdentifier:(NSString *__nonnull)sceneIdentifier;
 
 @end
