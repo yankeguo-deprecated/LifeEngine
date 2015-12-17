@@ -8,11 +8,13 @@
 #import "LEHistory.h"
 #import "LEHistory+Private.h"
 
-@interface LEHistory ()
+#import "LECache.h"
+
+@interface LEHistory ()<LECacheDataSource>
 
 @property(nonatomic, assign) NSUInteger numberOfEntries;
 
-@property(nonatomic, strong) NSCache<NSNumber *, LEHistoryEntry *> *cache;
+@property(nonatomic, strong) LECache<NSNumber *, LEHistoryEntry *> *cache;
 
 @end
 
@@ -20,7 +22,7 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    self.cache = [[NSCache alloc] init];
+    self.cache = [[LECache alloc] init];
     self.cache.countLimit = 100 * 2;
   }
   return self;
@@ -32,14 +34,7 @@
 }
 
 - (LEHistoryEntry *__nonnull)entryAtIndex:(NSUInteger)index {
-  LEHistoryEntry *entry = [self.cache objectForKey:@(index)];
-  if (entry == nil) {
-    entry = [self.persistenceAdapter history:self entryAtIndex:index];
-    if (entry) {
-      [self.cache setObject:entry forKey:@(index)];
-    }
-  }
-  return entry;
+  return [self.cache objectDefiniteForKey:@(index)];
 }
 
 - (void)appendEntryForItem:(__kindof LEItem *__nonnull)item withSceneIdentifier:(NSString *__nonnull)sceneIdentifier {
@@ -49,6 +44,13 @@
   entry.sceneIdentifier = sceneIdentifier;
   [self.persistenceAdapter history:self didAddEntry:entry];
   self.numberOfEntries = [self.persistenceAdapter numberOfEntriesInHistory:self];
+}
+
+#pragma mark - LECache DataSource
+
+- (LEHistoryEntry *__nullable)cache:(LECache *)cache objectForKey:(NSNumber *__nonnull)key cost:(NSUInteger *_Nonnull)cost {
+  *cost = 1;
+  return [self.persistenceAdapter history:self entryAtIndex:key.unsignedIntegerValue];
 }
 
 @end
