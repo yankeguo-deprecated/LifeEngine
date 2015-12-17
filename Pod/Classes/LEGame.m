@@ -9,7 +9,8 @@
 
 #import "LEEvaluator.h"
 #import "LEI18n.h"
-#import "LEContext.h"
+#import "LEContext+Private.h"
+#import "LEHistory+Private.h"
 #import "LESceneLoader.h"
 
 @interface LEGame ()<LEEvaluatorDataSource>
@@ -48,6 +49,12 @@
   [self.history load];
 }
 
+#pragma mark - Context
+
+- (void)setContextObject:(__kindof NSObject *__nullable)object forKey:(NSString *__nonnull)key {
+  [self.context setObject:object forKey:key atRev:self.history.numberOfEntries];
+}
+
 #pragma mark - TextRendererDataSource
 
 - (__kindof NSObject *__nullable)evaluator:(LEEvaluator *__nonnull)evaluator
@@ -62,12 +69,19 @@
         setObject:(__kindof NSObject *__nonnull)object
            forKey:(NSString *__nonnull)key
      resourceType:(NSString *__nonnull)resourceType {
-  //TODO: implement
+  //  Currently we support context only
+  NSParameterAssert([resourceType isEqualToString:@"context"]);
+  [self setContextObject:object forKey:key];
+}
+
+- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator renderStringWithI18n:(NSString *__nonnull)string {
+  return [self.i18n renderString:string];
 }
 
 #pragma mark - Game Flow
 
 - (void)handleInput:(NSString *__nonnull)input {
+  [self.currentItem game:self handleInput:input];
 }
 
 - (BOOL)advanceTowardNextItem {

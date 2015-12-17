@@ -24,6 +24,10 @@
   [self.context removeAllObjects];
 }
 
+- (NSString *)evaluator:(LEEvaluator *)evaluator renderStringWithI18n:(NSString *)string {
+  return string;
+}
+
 - (__kindof NSObject *__nullable)evaluator:(LEEvaluator *__nonnull)textRenderer resolveObjectForKey:(NSString *__nonnull)key resourceType:(NSString *__nonnull)resourceType {
   return self.context[[NSString stringWithFormat:@"%@::%@", resourceType, key]];
 }
@@ -84,7 +88,7 @@ SpecBegin(LEEvaluator)
     it(@"should work with resource", ^{
       XCTAssertEqualObjects(@"hello world", [_evaluator evaluateString:@"${context::h} ${context::w}"]);
     });
-    
+
   });
 
   describe(@"evaluate string as number", ^{

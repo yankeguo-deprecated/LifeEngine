@@ -44,7 +44,9 @@
 }
 
 - (NSString *__nonnull)evaluateString:(NSString *__nonnull)string {
-  NSMutableString *result = [NSMutableString stringWithString:string];
+  NSParameterAssert(self.dataSource != nil);
+  NSString *localizedString = [self.dataSource evaluator:self renderStringWithI18n:string];
+  NSMutableString *result = [NSMutableString stringWithString:localizedString];
   NSTextCheckingResult *matchResult = nil;
   while ((matchResult = [self.expressionResource firstMatchInString:result
                                                             options:0

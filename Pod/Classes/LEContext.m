@@ -7,6 +7,8 @@
 
 #import "LEContext.h"
 
+#import "LEContext+Private.h"
+
 @interface LEContext ()
 
 @property(nonatomic, strong) NSMutableIndexSet *changesetRevs;

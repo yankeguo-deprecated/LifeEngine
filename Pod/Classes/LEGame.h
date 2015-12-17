@@ -46,6 +46,10 @@
 
 - (void)load;
 
+#pragma mark - Context
+
+- (void)setContextObject:(__kindof NSObject *__nullable)object forKey:(NSString *__nonnull)key;
+
 #pragma mark - Game Control
 
 - (void)handleInput:(NSString *__nonnull)input;

@@ -13,6 +13,8 @@ extern NSString *const __nonnull LEItemClassKey;
 
 @interface LEItem: LESerializable
 
+@property(nonatomic, strong) NSArray<NSDictionary *> *__nullable actions;
+
 + (__kindof LEItem *__nonnull)itemWithDictionary:(NSDictionary *__nonnull)dictionary;
 
 #pragma mark - For Subclass

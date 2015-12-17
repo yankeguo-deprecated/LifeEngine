@@ -21,6 +21,4 @@
 
 - (LEHistoryEntry *__nonnull)entryAtIndex:(NSUInteger)index;
 
-- (void)appendEntryForItem:(__kindof LEItem *__nonnull)item withSceneIdentifier:(NSString *__nonnull)sceneIdentifier;
-
 @end

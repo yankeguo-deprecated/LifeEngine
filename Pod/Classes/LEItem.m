@@ -25,7 +25,8 @@ NSDictionary *__nonnull LEItemBuiltinClassShortcuts;
         @"text" : @"LETextItem",
         @"image" : @"LEImageItem",
         @"wait" : @"LEWaitItem",
-        @"option" : @"LEOptionItem"
+        @"option" : @"LEOptionItem",
+        @"input" : @"LEInputItem"
     };
   }
 }
@@ -54,12 +55,18 @@ NSDictionary *__nonnull LEItemBuiltinClassShortcuts;
 
 - (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary {
   [super awakeFromDictionary:dictionary];
+
+  self.actions = dictionary[@"action"] ?: dictionary[@"actions"];
+  if ([self.actions isKindOfClass:[NSDictionary class]]) {
+    self.actions = @[self.actions];
+  }
 }
 
 - (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary {
   [super dumpToDictionary:dictionary];
 
   dictionary[LEItemClassKey] = NSStringFromClass([self class]);
+  dictionary[@"actions"] = self.actions;
 }
 
 #pragma mark - For Subclass
@@ -72,6 +79,6 @@ NSDictionary *__nonnull LEItemBuiltinClassShortcuts;
 
 - (void)willMoveToHistory:(LEGame *__nonnull)game { }
 
-- (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull) input { }
+- (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull)input { }
 
 @end

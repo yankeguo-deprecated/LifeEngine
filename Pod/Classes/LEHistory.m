@@ -6,6 +6,7 @@
 //
 
 #import "LEHistory.h"
+#import "LEHistory+Private.h"
 
 @interface LEHistory ()
 

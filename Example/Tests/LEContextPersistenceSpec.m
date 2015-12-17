@@ -7,6 +7,8 @@
 
 #import "LEContextDefaultPersistence.h"
 
+#import <LifeEngine/LEContext+Private.h>
+
 SpecBegin(LEContextPersistence)
 
   __block LEContext *_context;

@@ -24,6 +24,9 @@
                        resolveObjectForKey:(NSString *__nonnull)key
                               resourceType:(NSString *__nonnull)resourceType;
 
+- (NSString *__nonnull)evaluator:(LEEvaluator *__nonnull)evaluator
+            renderStringWithI18n:(NSString *__nonnull)string;
+
 /**
  *  Set a object for key with resourceType, basically for context set
  *

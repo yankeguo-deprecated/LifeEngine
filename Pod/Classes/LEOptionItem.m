@@ -65,11 +65,18 @@
 - (void)game:(LEGame *__nonnull)game handleInput:(NSString *__nonnull)input {
   [super game:game handleInput:input];
 
+  NSString *sceneIdentifier = game.currentScene.identifier;
+
   [self.options enumerateObjectsUsingBlock:^(LEOptionItemOption *obj, NSUInteger idx, BOOL *stop) {
     if ([obj.identifier isEqualToString:input]) {
       [game.evaluator evaluateConditionalActionDictionaries:obj.actions];
     }
   }];
+
+  //  If no scene jump performed, just advance forward
+  if ([sceneIdentifier isEqualToString:game.currentScene.identifier]) {
+    [game advanceTowardNextItem];
+  }
 }
 
 @end
