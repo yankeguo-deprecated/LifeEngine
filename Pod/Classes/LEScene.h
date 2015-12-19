@@ -12,6 +12,8 @@
 
 @property(nonatomic, copy) NSString *__nonnull identifier;
 
+@property(nonatomic, strong) NSString *__nonnull next;
+
 @property(nonatomic, strong) NSArray<__kindof LEItem *> *__nonnull items;
 
 #pragma mark - Persistence

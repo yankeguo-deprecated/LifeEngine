@@ -1,0 +1,4 @@
+id: 'good'
+items: [
+    text: '@{good.end}'
+]

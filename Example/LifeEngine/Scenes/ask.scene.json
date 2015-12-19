@@ -1,0 +1,67 @@
+{
+  "id": "ask",
+  "next": "ask",
+  "items": [
+    {
+      "text": "@{ask.how_feels}"
+    },
+    {
+      "text": "@{ask.be_kind}"
+    },
+    {
+      "class": "option",
+      "options": [
+        {
+          "id": "good",
+          "text": "@{ask.feels_good}",
+          "action": [
+            {
+              "If": {
+                "NumberGreaterThan": {
+                  "context::heart": 5
+                }
+              },
+              "Do": {
+                "Set": {
+                  "scene::current": "good"
+                }
+              }
+            },
+            {
+              "Do": {
+                "Add": {
+                  "context::heart": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "bad",
+          "text": "@{ask.feels_bad}",
+          "action": [
+            {
+              "If": {
+                "NumberLessThan": {
+                  "context::heart": -1
+                }
+              },
+              "Do": {
+                "Set": {
+                  "scene::current": "bad"
+                }
+              }
+            },
+            {
+              "Do": {
+                "Add": {
+                  "context::heart": -1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

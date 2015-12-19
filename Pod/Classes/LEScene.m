@@ -24,6 +24,8 @@
 
   self.identifier = dictionary[@"id"];
   NSParameterAssert([self.identifier isKindOfClass:[NSString class]]);
+  
+  self.next = dictionary[@"next"];
 
   NSArray<NSDictionary *> *rawItems = dictionary[@"items"];
   NSParameterAssert([rawItems isKindOfClass:[NSArray class]]);
@@ -34,6 +36,7 @@
   [super dumpToDictionary:dictionary];
 
   dictionary[@"id"] = self.identifier;
+  dictionary[@"next"] = self.next;
   dictionary[@"items"] = [LEItem arrayOfDictionariesFromArrayOfSerializables:self.items];
 }
 

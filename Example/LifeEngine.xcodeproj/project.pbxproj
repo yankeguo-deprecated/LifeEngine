@@ -26,6 +26,11 @@
 		691E221D1C1B2CF1000DCA3D /* default.locale.plist in Resources */ = {isa = PBXBuildFile; fileRef = 691E221F1C1B2CF1000DCA3D /* default.locale.plist */; };
 		691E22231C1B2D03000DCA3D /* addresses.locale.plist in Resources */ = {isa = PBXBuildFile; fileRef = 691E22251C1B2D03000DCA3D /* addresses.locale.plist */; };
 		691E222A1C1B2E0A000DCA3D /* LEI18nSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */; };
+		6988EFDE1C22CA6F000F55CA /* main.scene.json in Resources */ = {isa = PBXBuildFile; fileRef = 6988EFDD1C22CA6F000F55CA /* main.scene.json */; };
+		6988EFE61C22CC92000F55CA /* bad.scene.json in Resources */ = {isa = PBXBuildFile; fileRef = 6988EFE11C22CC91000F55CA /* bad.scene.json */; };
+		6988EFE71C22CC92000F55CA /* good.scene.json in Resources */ = {isa = PBXBuildFile; fileRef = 6988EFE21C22CC92000F55CA /* good.scene.json */; };
+		6988EFEE1C22D2F8000F55CA /* same_name.scene.json in Resources */ = {isa = PBXBuildFile; fileRef = 6988EFED1C22D2F8000F55CA /* same_name.scene.json */; };
+		6988EFF01C22D3C0000F55CA /* ask.scene.json in Resources */ = {isa = PBXBuildFile; fileRef = 6988EFEF1C22D3C0000F55CA /* ask.scene.json */; };
 		69BD75E51C1DEB0100E260B9 /* LEContextPersistenceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BD75E41C1DEB0100E260B9 /* LEContextPersistenceSpec.m */; };
 		69C2789B1C1EB2DC00037F24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69C2789A1C1EB2DC00037F24 /* LaunchScreen.storyboard */; };
 		69CA54611C1B677900600072 /* items_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 69CA54601C1B677900600072 /* items_sample.json */; };
@@ -82,6 +87,11 @@
 		691E22241C1B2D03000DCA3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/addresses.locale.plist; sourceTree = "<group>"; };
 		691E22261C1B2D06000DCA3D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/addresses.locale.plist"; sourceTree = "<group>"; };
 		691E22281C1B2DE1000DCA3D /* LEI18nSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEI18nSpec.m; sourceTree = "<group>"; };
+		6988EFDD1C22CA6F000F55CA /* main.scene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.scene.json; sourceTree = "<group>"; };
+		6988EFE11C22CC91000F55CA /* bad.scene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bad.scene.json; sourceTree = "<group>"; };
+		6988EFE21C22CC92000F55CA /* good.scene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = good.scene.json; sourceTree = "<group>"; };
+		6988EFED1C22D2F8000F55CA /* same_name.scene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = same_name.scene.json; sourceTree = "<group>"; };
+		6988EFEF1C22D3C0000F55CA /* ask.scene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ask.scene.json; sourceTree = "<group>"; };
 		69BD75E41C1DEB0100E260B9 /* LEContextPersistenceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEContextPersistenceSpec.m; sourceTree = "<group>"; };
 		69C2789A1C1EB2DC00037F24 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69CA54601C1B677900600072 /* items_sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items_sample.json; sourceTree = "<group>"; };
@@ -165,6 +175,7 @@
 		6003F593195388D20070C39A /* Example for LifeEngine */ = {
 			isa = PBXGroup;
 			children = (
+				6988EFDC1C22CA6F000F55CA /* Scenes */,
 				691740AA1C1CABC300A63F2A /* sample.scene.json */,
 				69CA54601C1B677900600072 /* items_sample.json */,
 				691E221A1C1B2CD4000DCA3D /* I18n */,
@@ -233,6 +244,18 @@
 				691E22251C1B2D03000DCA3D /* addresses.locale.plist */,
 			);
 			path = I18n;
+			sourceTree = "<group>";
+		};
+		6988EFDC1C22CA6F000F55CA /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				6988EFEF1C22D3C0000F55CA /* ask.scene.json */,
+				6988EFED1C22D2F8000F55CA /* same_name.scene.json */,
+				6988EFE11C22CC91000F55CA /* bad.scene.json */,
+				6988EFE21C22CC92000F55CA /* good.scene.json */,
+				6988EFDD1C22CA6F000F55CA /* main.scene.json */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,11 +345,16 @@
 				691740AB1C1CABC300A63F2A /* sample.scene.json in Resources */,
 				69C2789B1C1EB2DC00037F24 /* LaunchScreen.storyboard in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				6988EFF01C22D3C0000F55CA /* ask.scene.json in Resources */,
 				691E221D1C1B2CF1000DCA3D /* default.locale.plist in Resources */,
+				6988EFE61C22CC92000F55CA /* bad.scene.json in Resources */,
 				69CA54611C1B677900600072 /* items_sample.json in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				6988EFDE1C22CA6F000F55CA /* main.scene.json in Resources */,
 				691E22231C1B2D03000DCA3D /* addresses.locale.plist in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				6988EFEE1C22D2F8000F55CA /* same_name.scene.json in Resources */,
+				6988EFE71C22CC92000F55CA /* good.scene.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
