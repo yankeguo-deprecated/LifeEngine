@@ -1,5 +1,8 @@
 //
-// Created by Yanke Guo on 15/12/13.
+//  LEEvaluator.m
+//  LifeEngine
+//
+//  Created by Ryan Guo on 15/12/13.
 //
 
 #import "LEEvaluator.h"
@@ -8,7 +11,6 @@
 
 @interface LEEvaluator ()
 
-@property(nonatomic, strong) NSRegularExpression *__nonnull expressionI18n;
 
 @property(nonatomic, strong) NSRegularExpression *__nonnull expressionResource;
 
@@ -18,9 +20,6 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    self.expressionI18n = [NSRegularExpression regularExpressionWithPattern:@"@\\{(.+?)\\}"
-                                                                    options:NSRegularExpressionCaseInsensitive
-                                                                      error:nil];
     self.expressionResource = [NSRegularExpression regularExpressionWithPattern:@"\\$\\{(.+?)\\:\\:(.+?)\\}"
                                                                         options:NSRegularExpressionCaseInsensitive
                                                                           error:nil];
@@ -45,7 +44,9 @@
 }
 
 - (NSString *__nonnull)evaluateString:(NSString *__nonnull)string {
-  NSMutableString *result = [NSMutableString stringWithString:string];
+  NSParameterAssert(self.dataSource != nil);
+  NSString *localizedString = [self.dataSource evaluator:self renderStringWithI18n:string];
+  NSMutableString *result = [NSMutableString stringWithString:localizedString];
   NSTextCheckingResult *matchResult = nil;
   while ((matchResult = [self.expressionResource firstMatchInString:result
                                                             options:0
@@ -55,15 +56,6 @@
     NSString *key = [result substringWithRange:[matchResult rangeAtIndex:2]];
     [result replaceCharactersInRange:matchResult.range
                           withString:[self resolveObjectAsStringForKey:key resourceType:resourceType]];
-  }
-  while ((matchResult = [self.expressionI18n firstMatchInString:result
-                                                        options:0
-                                                          range:NSMakeRange(0, result.length)])) {
-    NSParameterAssert(matchResult.numberOfRanges == 2);
-    NSString *key = [result substringWithRange:[matchResult rangeAtIndex:1]];
-    [result replaceCharactersInRange:matchResult.range
-                          withString:[self.dataSource evaluator:self
-                                   resolveLocalizedStringForKey:key]];
   }
   return [result copy];
 }
@@ -104,6 +96,51 @@
   }
   //  Using Common Operators
   return [self evaluateConditionWithCommonOperatorsOnly:dictionary];
+}
+
+- (void)evaluateActionDictionary:(NSDictionary *__nonnull)action {
+  NSParameterAssert([action isKindOfClass:[NSDictionary class]]);
+  [action enumerateKeysAndObjectsUsingBlock:^(NSString *actionName, NSDictionary *actionTarget, BOOL *stop) {
+    if ([actionName isEqualToString:@"Set"]) {
+      [actionTarget enumerateKeysAndObjectsUsingBlock:^(NSString *key, __kindof NSObject *obj, BOOL *stop2) {
+        [self evaluateSetActionWithMixin:obj forKey:key];
+      }];
+    } else if ([actionName isEqualToString:@"Add"]) {
+      [actionTarget enumerateKeysAndObjectsUsingBlock:^(NSString *key, __kindof NSObject *obj, BOOL *stop2) {
+        [self evaluateAddActionWithMixin:obj forKey:key];
+      }];
+    }
+  }];
+}
+
+- (void)evaluateActionDictionaries:(NSArray<NSDictionary *> *__nonnull)actions {
+  [actions enumerateObjectsUsingBlock:^(NSDictionary *action, NSUInteger idx, BOOL *stop) {
+    [self evaluateActionDictionary:action];
+  }];
+}
+
+- (void)evaluateConditionalActionDictionary:(NSDictionary *__nonnull)conditionalAction {
+  [self evaluateConditionalActionDictionaries:@[conditionalAction]];
+}
+
+- (void)evaluateConditionalActionDictionaries:(NSArray<NSDictionary *> *__nonnull)conditionalActions {
+  NSParameterAssert([conditionalActions isKindOfClass:[NSArray class]]);
+
+  [conditionalActions enumerateObjectsUsingBlock:^(NSDictionary *conditionalAction, NSUInteger idx, BOOL *stop) {
+    BOOL success = YES;
+    NSDictionary *conditionDictionary = conditionalAction[@"If"];
+    if ([conditionDictionary isKindOfClass:[NSDictionary class]]) {
+      success &= [self evaluateConditionDictionary:conditionDictionary];
+    }
+    if (success) {
+      //  do action
+      [self evaluateActionDictionary:conditionalAction[@"Do"]];
+      //  continue next clause on demand
+      if (![conditionalAction[@"Continue"] boolValue]) {
+        *stop = YES;
+      }
+    }
+  }];
 }
 
 #pragma mark - Helpers

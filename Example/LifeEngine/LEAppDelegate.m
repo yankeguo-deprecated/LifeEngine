@@ -8,7 +8,7 @@
 
 #import "LEAppDelegate.h"
 #import <LifeEngine/LifeEngine.h>
-#import <LifeEngine/LEContextPersistence.h>
+#import "LEContextDefaultPersistence.h"
 
 @implementation LEAppDelegate
 

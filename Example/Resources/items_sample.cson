@@ -1,0 +1,28 @@
+text:
+  class: 'text'
+  text: 'Sample'
+  style: 'green'
+text_pre_rendered:
+  class: 'text'
+  text: 'Sample'
+  rendered_text: 'Sample2'
+  style: 'green'
+image:
+  class: 'image'
+  image_name: 'sample_image'
+wait_number:
+  class: 'wait'
+  time: 200
+  text: 'Sample'
+wait_string:
+  class: 'wait'
+  time: '1.5h'
+  text: 'Sample'
+wait_string2:
+  class: 'wait'
+  time: '2m'
+  text: 'Sample'
+wait_string3:
+  class: 'wait'
+  time: '1.5d'
+  text: 'Sample'

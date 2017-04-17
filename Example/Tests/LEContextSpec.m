@@ -4,6 +4,8 @@
 //  Created by Ryan Guo on 15/12/11.
 //
 
+#import <LifeEngine/LEContext+Private.h>
+
 SpecBegin(LEContext)
 
 describe(@"stringForKey", ^{

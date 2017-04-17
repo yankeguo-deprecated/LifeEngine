@@ -7,14 +7,18 @@
 
 #import "LEI18n.h"
 
+#import "LECache.h"
+
 #define LEI18nGroup NSDictionary<NSString*,NSString*>
 
 NSString *const LEI18nDefaultGroupName = @"default";
 
-@interface LEI18n ()
+@interface LEI18n ()<LECacheDataSource>
 
-@property(nonatomic, strong) NSCache<NSString *, LEI18nGroup *> *cache;
-@property(nonatomic, strong) NSCache<NSString *, NSString *> *directCache;
+@property(nonatomic, strong) NSRegularExpression *__nonnull expressionI18n;
+
+@property(nonatomic, strong) LECache<NSString *, LEI18nGroup *> *cache;
+@property(nonatomic, strong) LECache<NSString *, NSString *> *directCache;
 
 @end
 
@@ -22,25 +26,35 @@ NSString *const LEI18nDefaultGroupName = @"default";
 
 - (instancetype)init {
   if (self = [super init]) {
-    self.cache = [[NSCache alloc] init];
-    self.cache.totalCostLimit = 2 * 100 * 1000;
+    self.expressionI18n = [NSRegularExpression regularExpressionWithPattern:@"@\\{(.+?)\\}"
+                                                                    options:NSRegularExpressionCaseInsensitive
+                                                                      error:nil];
 
-    self.directCache = [[NSCache alloc] init];
+    self.cache = [[LECache alloc] init];
+    self.cache.totalCostLimit = 2 * 100 * 1000;
+    self.cache.dataSource = self;
+
+    self.directCache = [[LECache alloc] init];
     self.directCache.countLimit = 2 * 10 * 1000;
+    self.directCache.dataSource = self;
   }
   return self;
 }
 
 - (NSString *__nonnull)localizedStringForKey:(NSString *__nonnull)key {
-  NSString *result = [self.directCache objectForKey:key];
-  if (result == nil) {
-    result = [self _L2_localizedStringForKey:key];
-    if (result) {
-      [self.directCache setObject:result forKey:key];
-    }
-  }
-  if (result == nil) {
-    result = key;
+  return [self.directCache objectDefiniteForKey:key];
+}
+
+- (NSString *__nonnull)renderString:(NSString *__nonnull)string {
+  NSMutableString *result = [NSMutableString stringWithString:string];
+  NSTextCheckingResult *matchResult = nil;
+  while ((matchResult = [self.expressionI18n firstMatchInString:result
+                                                        options:0
+                                                          range:NSMakeRange(0, result.length)])) {
+    NSParameterAssert(matchResult.numberOfRanges == 2);
+    NSString *key = [result substringWithRange:[matchResult rangeAtIndex:1]];
+    [result replaceCharactersInRange:matchResult.range
+                          withString:[self localizedStringForKey:key]];
   }
   return result;
 }
@@ -62,16 +76,23 @@ NSString *const LEI18nDefaultGroupName = @"default";
   NSParameterAssert(groupName.length);
   NSParameterAssert(pathName.length);
 
-  LEI18nGroup *group = [self.cache objectForKey:groupName];
-
-  if (group == nil) {
-    group = [[LEI18nGroup alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:groupName
-                                                                               withExtension:@"locale.plist"]];
-    NSParameterAssert(group);
-    [self.cache setObject:group forKey:groupName cost:group.count];
-  }
+  LEI18nGroup *group = [self.cache objectDefiniteForKey:groupName];
 
   return [group valueForKeyPath:pathName];
+}
+
+#pragma mark - LECache DataSource
+
+- (id)cache:(LECache *)cache objectForKey:(NSString *__nonnull)key cost:(NSUInteger *_Nonnull)cost {
+  if (cache == self.directCache) {
+    *cost = 1;
+    return [self _L2_localizedStringForKey:key];
+  } else {
+    LEI18nGroup *group = [[LEI18nGroup alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:key
+                                                                               withExtension:@"locale.plist"]];
+    *cost = group.count;
+    return group;
+  }
 }
 
 @end

@@ -22,4 +22,6 @@ extern NSString *__nonnull const LEI18nDefaultGroupName;
  */
 - (NSString *__nonnull)localizedStringForKey:(NSString *__nonnull)key;
 
+- (NSString *__nonnull)renderString:(NSString *__nonnull)string;
+
 @end

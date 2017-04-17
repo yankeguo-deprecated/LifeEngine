@@ -1,7 +1,0 @@
-items:
-  - 
-    __class: LETextItem
-    text: "@{alice} is here"
-  -
-    __class: LEImageItem
-    image_name: sample_scene

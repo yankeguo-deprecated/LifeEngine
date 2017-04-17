@@ -8,9 +8,12 @@
 #import <Foundation/Foundation.h>
 
 #import "LEScene.h"
+#import "LESceneLoaderPersistenceAdapter.h"
 
 @interface LESceneLoader: NSObject
 
-- (LEScene* __nonnull)sceneWithIdentifier:(NSString* __nonnull)identifier;
+@property(nonatomic, retain) id<LESceneLoaderPersistenceAdapter> __nonnull persistenceAdapter;
+
+- (LEScene *__nonnull)sceneWithIdentifier:(NSString *__nonnull)identifier;
 
 @end

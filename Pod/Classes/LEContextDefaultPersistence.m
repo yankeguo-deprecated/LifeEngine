@@ -1,21 +1,23 @@
 //
-//  LEContextPersistence.m
+//  LEContextDefaultPersistence.m
 //  LifeEngine
 //
 //  Created by Ryan Guo on 15/12/13.
 //
 
-#import "LEContextPersistence.h"
+#import "LEContextDefaultPersistence.h"
+
+#import "LEContextChangeset.h"
 
 NSString *const __nonnull LEContextPersistenceDirectory = @"context";
 
-@interface LEContextPersistence ()
+@interface LEContextDefaultPersistence ()
 
 @property(nonatomic, strong) NSString *persistencePath;
 
 @end
 
-@implementation LEContextPersistence
+@implementation LEContextDefaultPersistence
 
 - (instancetype)init {
   if (self = [super init]) {

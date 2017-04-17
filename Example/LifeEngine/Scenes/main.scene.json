@@ -1,0 +1,38 @@
+{
+  "id": "main",
+  "next": "ask",
+  "items": [
+    {
+      "text": "@{main.hello}"
+    },
+    {
+      "text": "@{main.hello2}"
+    },
+    {
+      "text": "@{main.self_intro}"
+    },
+    {
+      "text": "@{main.ask_your_name}"
+    },
+    {
+      "class": "input",
+      "key": "name",
+      "text": "@{main.input_your_name}"
+    },
+    {
+      "text": "@{main.comment_abount_name}",
+      "action": {
+        "If": {
+          "StringEqualsIgnoreCase": {
+            "context::name": "@{alice}"
+          }
+        },
+        "Do": {
+          "Set": {
+            "scene::current": "same_name"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -195,4 +195,30 @@
   return NO;
 }
 
+#pragma mark - Action
+
+- (void)evaluateSetActionWithMixin:(__kindof NSObject *__nonnull)object forKey:(NSString *__nonnull)key {
+  NSArray <NSString *> *keyComponents = [key componentsSeparatedByString:@"::"];
+  NSParameterAssert(keyComponents.count == 2);
+  NSString *resourceType = keyComponents.firstObject;
+  NSString *resourceKey = keyComponents.lastObject;
+  [self.dataSource evaluator:self setObject:object forKey:resourceKey resourceType:resourceType];
+}
+
+- (void)evaluateAddActionWithMixin:(__kindof NSObject *__nonnull)object forKey:(NSString *__nonnull)key {
+  NSArray <NSString *> *keyComponents = [key componentsSeparatedByString:@"::"];
+  NSParameterAssert(keyComponents.count == 2);
+  NSString *resourceType = keyComponents.firstObject;
+  NSString *resourceKey = keyComponents.lastObject;
+  NSNumber *orignalNumber = [self resolveObjectAsNumberForKey:resourceKey resourceType:resourceType];
+  NSNumber *number = object;
+  if ([object isKindOfClass:[NSString class]]) {
+    number = [self evaluateStringAsNumber:object];
+  }
+  NSParameterAssert([number isKindOfClass:[NSNumber class]]);
+  NSDecimalNumber *finalNumber = [NSDecimalNumber decimalNumberWithString:[orignalNumber stringValue]];
+  finalNumber = [finalNumber decimalNumberByAdding:[NSDecimalNumber decimalNumberWithString:[number stringValue]]];
+  [self.dataSource evaluator:self setObject:finalNumber forKey:resourceKey resourceType:resourceType];
+}
+
 @end

@@ -13,6 +13,10 @@
 
 @implementation LEContextChangeset
 
++ (instancetype)changesetWithDictionary:(NSDictionary *__nonnull)dictionary {
+  return [(LEContextChangeset *) [[self class] alloc] initWithDictionary:dictionary];
+}
+
 + (instancetype)changesetWithRev:(NSUInteger)rev change:(NSDictionary *__nonnull)change {
   return [((LEContextChangeset *) [[self class] alloc]) initWithRev:rev change:change];
 }
@@ -27,17 +31,20 @@
   return self;
 }
 
-#pragma mark - Persistence
+#pragma mark - LESerializable
 
-+ (instancetype)changesetWithDictionary:(NSDictionary *__nonnull)dictionary {
-  return [self changesetWithRev:[dictionary[@"rev"] unsignedIntegerValue] change:dictionary[@"change"]];
+- (void)awakeFromDictionary:(NSDictionary *__nonnull)dictionary {
+  [super awakeFromDictionary:dictionary];
+
+  _rev = [dictionary[@"rev"] unsignedIntegerValue];
+  _change = dictionary[@"change"];
 }
 
-- (NSDictionary *__nonnull)toDictionary {
-  return @{
-      @"rev" : @(self.rev),
-      @"change" : self.change
-  };
+- (void)dumpToDictionary:(NSMutableDictionary *__nonnull)dictionary {
+  [super dumpToDictionary:dictionary];
+
+  dictionary[@"rev"] = @(self.rev);
+  dictionary[@"change"] = self.change;
 }
 
 #pragma mark - Manipulation

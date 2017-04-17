@@ -17,28 +17,22 @@ beforeAll(^{
 describe(@"LETextItem", ^{
   it(@"should work", ^{
     NSDictionary* json = _sample[@"text"];
-    LETextItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"A" index:2];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"A");
-    XCTAssertEqual(item.index, 2);
+    LETextItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LETextItem class]]);
     XCTAssertEqualObjects(item.text, @"Sample");
     XCTAssertEqualObjects(item.style, @"green");
   });
   it(@"should work with dump", ^{
     NSDictionary* json = _sample[@"text"];
-    LETextItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"A" index:2];
-    item = [LEItem itemWithDictionary:[item toDictionary] sceneIdentifier:item.sceneIdentifier index:item.index];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"A");
-    XCTAssertEqual(item.index, 2);
+    LETextItem* item = [LEItem itemWithDictionary:json];
+    item = [LEItem itemWithDictionary:[item toDictionary]];
     XCTAssertTrue([item isKindOfClass:[LETextItem class]]);
     XCTAssertEqualObjects(item.text, @"Sample");
     XCTAssertEqualObjects(item.style, @"green");
   });
   it(@"should work with prerendered text", ^{
     NSDictionary* json = _sample[@"text_pre_rendered"];
-    LETextItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"A" index:2];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"A");
-    XCTAssertEqual(item.index, 2);
+    LETextItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LETextItem class]]);
     XCTAssertEqualObjects(item.text, @"Sample");
     XCTAssertEqualObjects(item.renderedText, @"Sample2");
@@ -49,18 +43,14 @@ describe(@"LETextItem", ^{
 describe(@"LEImageItem", ^{
   it(@"should work", ^{
     NSDictionary* json = _sample[@"image"];
-    LEImageItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"B" index:3];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"B");
-    XCTAssertEqual(item.index, 3);
+    LEImageItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LEImageItem class]]);
     XCTAssertEqualObjects(item.imageName, @"sample_image");
   });
   it(@"should work with dump", ^{
     NSDictionary* json = _sample[@"image"];
-    LEImageItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"B" index:3];
-    item = [LEItem itemWithDictionary:[item toDictionary] sceneIdentifier:item.sceneIdentifier index:item.index];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"B");
-    XCTAssertEqual(item.index, 3);
+    LEImageItem* item = [LEItem itemWithDictionary:json];
+    item = [LEItem itemWithDictionary:[item toDictionary]];
     XCTAssertTrue([item isKindOfClass:[LEImageItem class]]);
     XCTAssertEqualObjects(item.imageName, @"sample_image");
   });
@@ -69,42 +59,32 @@ describe(@"LEImageItem", ^{
 describe(@"LEWaitItem", ^{
   it(@"should work with pure number", ^{
     NSDictionary* json = _sample[@"wait_number"];
-    LEWaitItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"C" index:4];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"C");
-    XCTAssertEqual(item.index, 4);
+    LEWaitItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LEWaitItem class]]);
     XCTAssertEqual(item.time, 200);
   });
   it(@"should work with dump", ^{
     NSDictionary* json = _sample[@"wait_number"];
-    LEWaitItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"C" index:4];
-    item = [LEItem itemWithDictionary:[item toDictionary] sceneIdentifier:item.sceneIdentifier index:item.index];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"C");
-    XCTAssertEqual(item.index, 4);
+    LEWaitItem* item = [LEItem itemWithDictionary:json];
+    item = [LEItem itemWithDictionary:[item toDictionary]];
     XCTAssertTrue([item isKindOfClass:[LEWaitItem class]]);
     XCTAssertEqual(item.time, 200);
   });
   it(@"should work with h suffix", ^{
     NSDictionary* json = _sample[@"wait_string"];
-    LEWaitItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"C" index:4];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"C");
-    XCTAssertEqual(item.index, 4);
+    LEWaitItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LEWaitItem class]]);
     XCTAssertEqual(item.time, 1.5 * 3600);
   });
   it(@"should work with m suffix", ^{
     NSDictionary* json = _sample[@"wait_string2"];
-    LEWaitItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"C" index:4];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"C");
-    XCTAssertEqual(item.index, 4);
+    LEWaitItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LEWaitItem class]]);
     XCTAssertEqual(item.time, 2 * 60);
   });
   it(@"should work with d suffix", ^{
     NSDictionary* json = _sample[@"wait_string3"];
-    LEWaitItem* item = [LEItem itemWithDictionary:json sceneIdentifier:@"C" index:4];
-    XCTAssertEqualObjects(item.sceneIdentifier, @"C");
-    XCTAssertEqual(item.index, 4);
+    LEWaitItem* item = [LEItem itemWithDictionary:json];
     XCTAssertTrue([item isKindOfClass:[LEWaitItem class]]);
     XCTAssertEqual(item.time, 1.5 * 3600 * 24);
   });

@@ -1,0 +1,9 @@
+{
+  "id": "same_name",
+  "next": "ask",
+  "items": [
+    {
+      "text": "@{same_name.wow}"
+    }
+  ]
+}

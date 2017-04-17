@@ -1,0 +1,8 @@
+id: 'sample'
+items: [
+    class: 'text'
+    text: "@{alice} is here"
+  ,
+    class: 'image'
+    image_name: 'sample_scene'
+]
